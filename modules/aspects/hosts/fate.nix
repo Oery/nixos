@@ -7,6 +7,11 @@
       imports = [
         ../../../host-hardware/hardware-fate.nix
       ];
+
+      boot.loader.systemd-boot = {
+        enable = true;
+        configurationLimit = 5;
+      };
     };
   };
 }
