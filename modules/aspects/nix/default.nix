@@ -8,7 +8,7 @@ in
     nixos = { pkgs, ... }: {
       environment.systemPackages = [ pkgs.git ];
 
-      environment.variables.NH_OS_FLAKE = "/home/oery/Documents/GitHub/nixos-den";
+      environment.variables.NH_OS_FLAKE = "/etc/nixos";
 
       nix = {
         package = pkgs.lix;
