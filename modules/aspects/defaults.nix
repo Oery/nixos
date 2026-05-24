@@ -7,6 +7,7 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
+        backupFileExtension = "hm-backup";
       };
     };
     homeManager.home.stateVersion = "24.11";
