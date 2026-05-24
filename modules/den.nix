@@ -12,6 +12,10 @@
     hostName = "ZenBook";
     users.oery = { };
   };
+  den.hosts.x86_64-linux.fate = {
+    hostName = "Fate";
+    users.oery = { };
+  };
   den.hosts.aarch64-darwin.apple = {
     hostName = "apple";
     users.oery = { };
