@@ -1,4 +1,4 @@
-{ den, ... }:
+{ den, lib, ... }:
 {
   den.aspects.user.hyprland = {
     homeManager = {
@@ -20,7 +20,6 @@
 
           exec-once = [
             "qs -c oery"
-            "vicinae server"
             "wired"
             "hyprctl setcursor Bibata-Modern-Classic 24"
             "easyeffects --gapplication-service"
@@ -29,6 +28,12 @@
           input = {
             repeat_delay = 250;
             repeat_rate = 35;
+            kb_options = "caps:swapescape";
+            touchpad = {
+              disable_while_typing = lib.mkDefault true;
+              scroll_factor = lib.mkDefault 0.2;
+              natural_scroll = true;
+            };
           };
 
           general = {
@@ -637,5 +642,44 @@
         '';
       };
     };
+
+    provides.l16 = {
+      homeManager.wayland.windowManager.hyprland.settings = {
+        monitor = ",preferred,auto,1.25";
+        input = {
+          kb_layout = "fr";
+          numlock_by_default = true;
+          resolve_binds_by_sym = 0;
+          touchpad = {
+            natural_scroll = true;
+            disable_while_typing = false;
+            scroll_factor = 0.3;
+          };
+        };
+        bind = [
+          "Super, ampersand, workspace, 1"
+          "Super, eacute, workspace, 2"
+          "Super, quotedbl, workspace, 3"
+          "Super, apostrophe, workspace, 4"
+          "Super, parenleft, workspace, 5"
+          "Super, egrave, workspace, 6"
+          "Super, minus, workspace, 7"
+          "Super, underscore, workspace, 8"
+          "Super, ccedilla, workspace, 9"
+          "Super, agrave, workspace, 10"
+          "Super+Shift, ampersand, movetoworkspace, 1"
+          "Super+Shift, eacute, movetoworkspace, 2"
+          "Super+Shift, quotedbl, movetoworkspace, 3"
+          "Super+Shift, apostrophe, movetoworkspace, 4"
+          "Super+Shift, parenleft, movetoworkspace, 5"
+          "Super+Shift, egrave, movetoworkspace, 6"
+          "Super+Shift, minus, movetoworkspace, 7"
+          "Super+Shift, underscore, movetoworkspace, 8"
+          "Super+Shift, ccedilla, movetoworkspace, 9"
+          "Super+Shift, agrave, movetoworkspace, 10"
+        ];
+      };
+    };
+
   };
 }

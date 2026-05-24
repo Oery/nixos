@@ -1,7 +1,7 @@
 { inputs, den, lib, ... }:
 {
   den.aspects.zenbook = {
-    includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network den.aspects.user.hyprland-azerty ];
+    includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network ];
 
     provides.to-users = { user, ... }: lib.optionalAttrs (user.userName == "oery") {
       homeManager.wayland.windowManager.hyprland.settings = {
