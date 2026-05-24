@@ -1,7 +1,18 @@
 { inputs, den, lib, ... }:
 {
   den.aspects.zenbook = {
-    includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network ];
+    includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network den.aspects.user.hyprland-azerty ];
+
+    provides.to-users = { user, ... }: lib.optionalAttrs (user.userName == "oery") {
+      homeManager.wayland.windowManager.hyprland.settings = {
+        monitor = ",preferred,auto,auto";
+        env = [ "WALLPAPER_TYPE,static" ];
+        input = {
+          kb_layout = "fr";
+          touchpad = { natural_scroll = false; };
+        };
+      };
+    };
 
     nixos = { pkgs, modulesPath, ... }: {
       imports = [

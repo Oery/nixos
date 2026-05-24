@@ -3,6 +3,22 @@
   den.aspects.elysium = {
     includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network ];
 
+    provides.to-users = { user, ... }: lib.optionalAttrs (user.userName == "oery") {
+      homeManager.wayland.windowManager.hyprland.settings = {
+        env = [
+          "WALLPAPER_TYPE,static"
+        ];
+        input = {
+          kb_options = "caps:swapescape";
+          touchpad = {
+            disable_while_typing = true;
+            scroll_factor = 0.2;
+            natural_scroll = true;
+          };
+        };
+      };
+    };
+
     nixos = { pkgs, ... }: {
       imports = [
         ../../../host-hardware/hardware-elysium.nix

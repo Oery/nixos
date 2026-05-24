@@ -1,0 +1,120 @@
+#!/bin/sh
+
+get_playing_media() {
+    player=$(playerctl -l 2>/dev/null | grep -m1 '^firefox' | tr -d ' ')
+    if [ -z "$player" ]; then
+        return
+    fi
+    playerctl -p "$player" metadata xesam:title 2>/dev/null
+}
+
+get_current_window_title() {
+    hyprctl activewindow -j 2>/dev/null | jq -r '.title // empty'
+}
+
+enable_pip() {
+    PIP_EXISTS=$(hyprctl clients -j | jq -r '.[] | select(.class=="zen" and .title=="Picture-in-Picture") | .address' | head -n1)
+    if [ -n "$PIP_EXISTS" ]; then
+        return
+    fi
+    ZEN_WINDOW=$(hyprctl clients -j | jq -r '.[] | select(.class=="zen") | .address' | head -n1)
+    if [ -n "$ZEN_WINDOW" ]; then
+        hyprctl dispatch sendshortcut "CTRL_SHIFT, bracketright, address:$ZEN_WINDOW"
+    fi
+}
+
+disable_pip() {
+    PIP_WINDOW=$(hyprctl clients -j | jq -r '.[] | select(.class=="zen" and .title=="Picture-in-Picture") | .address' | head -n1)
+    if [ -n "$PIP_WINDOW" ]; then
+        hyprctl dispatch closewindow "address:$PIP_WINDOW"
+    fi
+}
+
+is_title_matching() {
+    media_title="$1"
+    window_title="$2"
+    if [ -z "$media_title" ] || [ -z "$window_title" ]; then
+        return 1
+    fi
+    case "$window_title" in
+        *"$media_title"*) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+handle_workspace_change() {
+    ws_id="$1"
+    case "$ws_id" in
+        3)
+            media_title=$(get_playing_media)
+            echo "[DEBUG] WS3: media_title='$media_title'" >&2
+            if [ -n "$media_title" ]; then
+                window_title=$(get_current_window_title)
+                echo "[DEBUG] WS3: window_title='$window_title'" >&2
+                if is_title_matching "$media_title" "$window_title"; then
+                    echo "[DEBUG] WS3: titles match, disabling PIP" >&2
+                    disable_pip
+                fi
+            fi
+            ;;
+        *)
+            echo "[DEBUG] Leaving WS3, enabling PIP" >&2
+            enable_pip
+            ;;
+    esac
+}
+
+handle_window_change() {
+    window_class="$1"
+    window_title="$2"
+    echo "[DEBUG] Window: class='$window_class', title='$window_title'" >&2
+    if [ "$window_class" != "zen" ]; then
+        return
+    fi
+    media_title=$(get_playing_media)
+    echo "[DEBUG] Window change: media_title='$media_title'" >&2
+    if [ -z "$media_title" ]; then
+        return
+    fi
+    if is_title_matching "$media_title" "$window_title"; then
+        echo "[DEBUG] Titles match, disabling PIP" >&2
+        disable_pip
+    else
+        echo "[DEBUG] Titles don't match, enabling PIP" >&2
+        enable_pip
+    fi
+}
+
+HYPR_SOCKET="$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock"
+
+if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+    exit 1
+fi
+
+if [ ! -S "$HYPR_SOCKET" ]; then
+    exit 1
+fi
+
+prev_ws=""
+
+socat -U - UNIX-CONNECT:"$HYPR_SOCKET" | while read -r line; do
+    case "$line" in
+        workspace*)
+            ws_id=$(printf '%s\n' "$line" | sed 's/.*>>//' | cut -d',' -f1)
+            if [ "$prev_ws" = "3" ] && [ "$ws_id" != "3" ]; then
+                handle_workspace_change "$ws_id"
+            elif [ "$prev_ws" != "3" ] && [ "$ws_id" = "3" ]; then
+                handle_workspace_change "$ws_id"
+            fi
+            prev_ws="$ws_id"
+            ;;
+        activewindow*)
+            window_data=$(printf '%s\n' "$line" | sed 's/.*>>//')
+            window_class=$(printf '%s\n' "$window_data" | cut -d',' -f1)
+            window_title=$(printf '%s\n' "$window_data" | cut -d',' -f2-)
+            if [ -n "$window_class" ] && [ -n "$window_title" ]; then
+                handle_window_change "$window_class" "$window_title"
+            fi
+            ;;
+    esac
+done

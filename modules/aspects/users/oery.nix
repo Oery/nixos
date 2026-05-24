@@ -1,4 +1,4 @@
-{ den, lib, ... }:
+{ den, ... }:
 {
   den.aspects.oery = {
     includes = [
@@ -9,6 +9,7 @@
       den.aspects.user.theme
       den.aspects.user.services
       den.aspects.user.packages
+      den.aspects.user.hyprland
     ];
 
     nixos = { pkgs, ... }: {

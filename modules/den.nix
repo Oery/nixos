@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, den, ... }:
 {
   den.hosts.aarch64-linux.elysium = {
     hostName = "Elysium";
@@ -21,4 +21,5 @@
   den.homes.x86_64-linux.oery = { };
 
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
+  den.schema.user.includes = [ den.batteries.mutual-provider ];
 }
