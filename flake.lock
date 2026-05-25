@@ -331,7 +331,6 @@
         "nixpkgs": "nixpkgs",
         "quickshell": "quickshell",
         "tree-sitter": "tree-sitter",
-        "yamis": "yamis",
         "zen-browser": "zen-browser"
       }
     },
@@ -470,23 +469,6 @@
         "owner": "numtide",
         "repo": "flake-utils",
         "type": "github"
-      }
-    },
-    "yamis": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1777194645,
-        "narHash": "sha256-r+xVPeEaTLYG2vtSnPFF6Y6jv+BdX1DYSOJ5tfUZZmw=",
-        "path": "/home/oery/Downloads/yet-another-monochrome-icon-set",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/oery/Downloads/yet-another-monochrome-icon-set",
-        "type": "path"
       }
     },
     "zen-browser": {

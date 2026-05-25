@@ -48,10 +48,6 @@
       url = "github:tree-sitter/tree-sitter";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    yamis = {
-      url = "path:/home/oery/Downloads/yet-another-monochrome-icon-set";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";

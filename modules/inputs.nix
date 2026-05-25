@@ -51,10 +51,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    yamis = {
-      url = "path:/home/oery/Downloads/yet-another-monochrome-icon-set";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
 }
