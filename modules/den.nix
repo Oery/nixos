@@ -1,14 +1,14 @@
 { lib, den, ... }:
 {
-  den.hosts.aarch64-linux.elysium = {
+  den.hosts.aarch64-linux.Elysium = {
     hostName = "Elysium";
     users.oery = { };
   };
-  den.hosts.x86_64-linux.l16 = {
+  den.hosts.x86_64-linux.L16 = {
     hostName = "L16";
     users.oery = { };
   };
-  den.hosts.x86_64-linux.zenbook = {
+  den.hosts.x86_64-linux.ZenBook = {
     hostName = "ZenBook";
     users.oery = { };
   };
