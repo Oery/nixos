@@ -19,6 +19,7 @@
           ];
 
           exec-once = [
+            "hyprlock"
             "qs -c oery"
             "wired"
             "hyprctl setcursor Bibata-Modern-Classic 24"
