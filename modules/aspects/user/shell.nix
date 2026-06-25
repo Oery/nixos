@@ -59,7 +59,109 @@
         };
       };
 
-      programs.starship.enable = true;
+      programs.starship = {
+        enable = true;
+        settings = {
+          add_newline = false;
+
+          format = "$directory$nix_shell$line_break$username";
+
+          username = {
+            detect_env_vars = [ ];
+            format = "[› ](bold white)";
+            style_root = "bold red";
+            style_user = "bold white";
+            show_always = true;
+            disabled = false;
+          };
+
+          package.disabled = true;
+
+          git_branch = {
+            style = "bg: green";
+            symbol = "󰘬";
+            truncation_length = 4;
+            truncation_symbol = "";
+            format = "• [](bold fg:green)[$symbol $branch(:$remote_branch)](fg:black bg:green)[ ](bold fg:green)";
+          };
+
+          git_commit = {
+            commit_hash_length = 4;
+            tag_symbol = " ";
+          };
+
+          git_state = {
+            format = "[\\($state( $progress_current of $progress_total)\\)]($style) ";
+            cherry_pick = "[🍒 PICKING](bold red)";
+          };
+
+          git_status = {
+            conflicted = " 🏳 ";
+            ahead = " 🏎💨 ";
+            behind = " 😰 ";
+            diverged = " 😵 ";
+            untracked = " 🤷 ‍";
+            stashed = " 📦 ";
+            modified = " 📝 ";
+            staged = "[++\\($count\\)](green)";
+            renamed = " ✍️ ";
+            deleted = " 🗑 ";
+          };
+
+          hostname = {
+            ssh_only = false;
+            format = "[•$hostname](bg:cyan bold fg:black)[](bold fg:cyan )";
+            trim_at = ".companyname.com";
+            disabled = false;
+          };
+
+          line_break.disabled = false;
+
+          memory_usage = {
+            disabled = true;
+            threshold = -1;
+            symbol = " ";
+            style = "bold dimmed green";
+          };
+
+          time = {
+            disabled = true;
+            format = "🕙[\\[$time\\]]($style) ";
+            time_format = "%T";
+          };
+
+          directory = {
+            home_symbol = "~";
+            read_only = "  ";
+            truncate_to_repo = true;
+            fish_style_pwd_dir_length = 0;
+            use_logical_path = true;
+            format = "₍^. .^₎⟆ ∣ $path[$read_only]($read_only_style) ";
+            repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) ";
+            disabled = false;
+            read_only_style = "red";
+            truncation_symbol = "";
+            use_os_path_sep = true;
+          };
+
+          directory.substitutions = {
+            "nixos" = "󱄅 ";
+          };
+
+          cmd_duration = {
+            min_time = 0;
+            format = "[](bold fg:yellow)[ $duration](bold bg:yellow fg:black)[](bold fg:yellow) •• ";
+          };
+
+          nix_shell = {
+            format = "via [❄️$name]($style) ";
+            style = "bold blue";
+            impure_msg = "impure";
+            pure_msg = "pure";
+            unknown_msg = "dev";
+          };
+        };
+      };
 
       programs.zoxide.enable = true;
     };
