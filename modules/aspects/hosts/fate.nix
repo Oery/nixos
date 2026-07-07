@@ -1,6 +1,6 @@
 { inputs, den, lib, ... }:
 {
-  den.aspects.fate = {
+  den.aspects.Fate = {
     includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network ];
 
     nixos = { pkgs, ... }: {
