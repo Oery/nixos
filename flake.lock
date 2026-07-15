@@ -367,11 +367,6 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1783247743,
-        "narHash": "sha256-t7OSMeG4CpSTLZKByvK/m0MY1eRLWsmNWL5bcqnbLng=",
-        "rev": "c4013e501c048ae7c4a8940c92837636042bf6c3",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1027958.c4013e501c04/nixexprs.tar.xz?lastModified=1783247743&rev=c4013e501c048ae7c4a8940c92837636042bf6c3"
       },
       "original": {
         "type": "tarball",
