@@ -48,6 +48,10 @@
       url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    tailscale-nautilus = {
+      url = "path:/home/oery/Projects/tailscale-nautilus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     tree-sitter = {
       url = "github:tree-sitter/tree-sitter";
       inputs.nixpkgs.follows = "nixpkgs";
