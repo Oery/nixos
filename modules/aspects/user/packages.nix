@@ -24,6 +24,8 @@
         grimblast
         hyprpicker
 
+        mpv
+
         inputs.tree-sitter.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         vscode
@@ -53,6 +55,10 @@
         nil
         imagemagick
         playerctl
+
+        # speedtest-cli
+        speed-cloudflare-cli
+        ookla-speedtest
       ];
 
       programs.prismlauncher.enable = true;
