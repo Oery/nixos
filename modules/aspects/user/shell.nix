@@ -17,6 +17,9 @@
         interactiveShellInit = ''
           set fish_greeting
           source "$__fish_config_dir/functions/space_between_prompts.fish"
+
+          set fish_cursor_default block
+          set fish_cursor_insert underscore
         '';
 
         shellAliases = {
@@ -28,12 +31,15 @@
         };
 
         functions = {
-          fish_title = {
-            body = ''
-              set -q argv[1]; or set argv fish
-              echo (fish_prompt_pwd_dir_length=10 prompt_pwd): $argv;
-            '';
-          };
+          fish_title.body = ''
+            set -q argv[1]; or set argv fish
+            echo (fish_prompt_pwd_dir_length=10 prompt_pwd): $argv;
+          '';
+
+          fish_user_key_bindings.body = ''
+            fish_default_key_bindings -M insert
+            fish_vi_key_bindings --no-erase insert
+          '';
 
           space_between_prompts = {
             description = "Add a new line after each command";
