@@ -10,7 +10,6 @@
       den.aspects.user.services
       den.aspects.user.packages
       den.aspects.user.hyprland
-      den.aspects.user.tailscale-nautilus
     ];
 
     nixos = { pkgs, ... }: {
