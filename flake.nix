@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     apple-silicon = {
-      url = "github:tpwrules/nixos-apple-silicon";
+      url = "github:tpwrules/nixos-apple-silicon/0d026343730db2fc0ddb5bb127d807c2f1138f80";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
