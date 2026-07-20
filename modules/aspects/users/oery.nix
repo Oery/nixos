@@ -15,7 +15,7 @@
     nixos = { pkgs, ... }: {
       users.users.oery = {
         packages = [ pkgs.vim ];
-        extraGroups = [ "video" "networkmanager" ];
+        extraGroups = [ "video" "networkmanager" "render"];
       };
     };
 
