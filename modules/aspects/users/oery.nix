@@ -26,7 +26,7 @@
 
       programs.mpv = {
         enable = true;
-        config.hwdec= "auto";
+        config.hwdec = "auto";
       };
     };
   };
