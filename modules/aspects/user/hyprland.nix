@@ -30,6 +30,7 @@
             repeat_delay = 250;
             repeat_rate = 35;
             kb_options = "caps:swapescape";
+            numlock_by_default = true;
             touchpad = {
               disable_while_typing = lib.mkDefault true;
               scroll_factor = lib.mkDefault 0.2;
