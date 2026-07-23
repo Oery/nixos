@@ -29,7 +29,6 @@
         inputs.tree-sitter.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         vscode
-        code-cursor
         zed-editor
         opencode
         claude-code
