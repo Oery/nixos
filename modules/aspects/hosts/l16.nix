@@ -36,7 +36,6 @@
         ../../../host-hardware/hardware-l16.nix
       ];
 
-      boot.bootspec.enable = true;
       boot.kernelPackages = pkgs.linuxPackages_latest;
       
       boot.consoleLogLevel = 3;
