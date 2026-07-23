@@ -1,7 +1,17 @@
-{ inputs, den, lib, ... }:
+{
+  inputs,
+  den,
+  lib,
+  ...
+}:
 {
   den.aspects.L16 = {
-    includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network ];
+    includes = [
+      den.aspects.core
+      den.aspects.desktop
+      den.aspects.nix
+      den.aspects.network
+    ];
 
     provides.to-users =
       { user, ... }:
@@ -23,7 +33,7 @@
       ];
 
       boot.kernelPackages = pkgs.linuxPackages_latest;
-      
+
       boot.consoleLogLevel = 3;
       boot.kernelParams = [
         "quiet"

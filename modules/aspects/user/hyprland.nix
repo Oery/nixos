@@ -594,7 +594,8 @@
             }
             {
               monitor = "";
-              text = "cmd[update:5000] " + "$" + "{XDG_CONFIG_HOME:-" + "$" + "HOME/.config}/hypr/hyprlock/status.sh";
+              text =
+                "cmd[update:5000] " + "$" + "{XDG_CONFIG_HOME:-" + "$" + "HOME/.config}/hypr/hyprlock/status.sh";
               shadow_passes = 1;
               shadow_boost = 0.5;
               color = "rgba(FFFFFFFF)";
