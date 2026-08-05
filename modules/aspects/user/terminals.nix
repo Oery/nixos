@@ -3,7 +3,7 @@
   den.aspects.user.terminals = {
     homeManager = { pkgs, ... }: {
       programs.ghostty = {
-        enable = true;
+        enable = false;
 
         settings = {
           gtk-single-instance = true;
@@ -53,7 +53,7 @@
       };
 
       programs.kitty = {
-        enable = true;
+        enable = false;
 
         font = {
           size = 14;
@@ -110,7 +110,7 @@
 
           mouse.hide_when_typing = true;
 
-          window.opacity = 0.9;
+          window.opacity = 0.85;
 
           colors = {
             primary = {

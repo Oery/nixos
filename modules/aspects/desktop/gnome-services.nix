@@ -19,7 +19,7 @@
 
       programs.nautilus-open-any-terminal = {
         enable = true;
-        terminal = "ghostty";
+        terminal = "alacritty";
       };
 
       environment.systemPackages = with pkgs; [
