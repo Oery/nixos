@@ -224,16 +224,6 @@
               workspace = "2";
             }
             {
-              name = "cursor-url-workspace-2";
-              "match:class" = "^(cursor-url-handler)$";
-              workspace = "2";
-            }
-            {
-              name = "cursor-url-opacity";
-              "match:class" = "^(cursor-url-handler)$";
-              opacity = "0.90";
-            }
-            {
               name = "zed-workspace-2";
               "match:class" = "^(dev.zed.Zed)$";
               workspace = "2";
