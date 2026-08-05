@@ -4,10 +4,28 @@
     nixos = { pkgs, ... }: {
       programs.dconf.enable = true;
 
+      nixpkgs.overlays = [
+        (final: prev: {
+          nautilus = prev.nautilus.overrideAttrs (nprev: {
+            buildInputs =
+              nprev.buildInputs
+              ++ (with pkgs.gst_all_1; [
+                gst-plugins-good
+                gst-plugins-bad
+              ]);
+          });
+        })
+      ];
+
       programs.nautilus-open-any-terminal = {
         enable = true;
-        terminal = "ghostty";
+        terminal = "alacritty";
       };
+
+      environment.systemPackages = with pkgs; [
+        ffmpeg-headless
+        ffmpegthumbnailer
+      ];
 
       services = {
         dbus.packages = with pkgs; [

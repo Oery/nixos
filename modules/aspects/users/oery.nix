@@ -10,13 +10,16 @@
       den.aspects.user.services
       den.aspects.user.packages
       den.aspects.user.hyprland
-      den.aspects.user.tailscale-nautilus
     ];
 
     nixos = { pkgs, ... }: {
       users.users.oery = {
         packages = [ pkgs.vim ];
-        extraGroups = [ "video" "networkmanager" ];
+        extraGroups = [
+          "video"
+          "networkmanager"
+          "render"
+        ];
       };
     };
 
@@ -27,7 +30,7 @@
 
       programs.mpv = {
         enable = true;
-        config.hwdec= "auto";
+        config.hwdec = "auto";
       };
     };
   };

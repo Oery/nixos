@@ -16,21 +16,20 @@
 
         awww
         quickshell
-        chromium
 
         jq
         socat
         grimblast
         hyprpicker
 
+        mpv
+
         inputs.tree-sitter.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         vscode
-        code-cursor
         zed-editor
         opencode
         claude-code
-        codex
 
         rustc
         cargo
@@ -52,6 +51,12 @@
         nil
         imagemagick
         playerctl
+
+        # speedtest-cli
+        speed-cloudflare-cli
+        ookla-speedtest
+
+        mpv
       ];
 
       manual.html.enable = false;
@@ -59,4 +64,5 @@
       manual.manpages.enable = false;
     };
   };
+
 }

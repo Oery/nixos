@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     apple-silicon = {
-      url = "github:tpwrules/nixos-apple-silicon";
+      url = "github:tpwrules/nixos-apple-silicon/0d026343730db2fc0ddb5bb127d807c2f1138f80";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
@@ -50,10 +50,6 @@
     nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
     quickshell = {
       url = "github:quickshell-mirror/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    tailscale-nautilus = {
-      url = "path:/home/oery/Projects/tailscale-nautilus";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     tree-sitter = {
