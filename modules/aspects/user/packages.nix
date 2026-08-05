@@ -11,13 +11,10 @@
         pavucontrol
         obsidian
         vesktop
-        equibop
-        kitty
         prism
 
         awww
         quickshell
-        chromium
 
         jq
         socat
@@ -32,7 +29,6 @@
         zed-editor
         opencode
         claude-code
-        codex
 
         rustc
         cargo
@@ -58,6 +54,8 @@
         # speedtest-cli
         speed-cloudflare-cli
         ookla-speedtest
+
+        mpv
       ];
 
       programs.prismlauncher.enable = true;
@@ -67,4 +65,5 @@
       manual.manpages.enable = false;
     };
   };
+
 }
