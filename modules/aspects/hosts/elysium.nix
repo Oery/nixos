@@ -11,6 +11,7 @@
       den.aspects.desktop
       den.aspects.nix
       den.aspects.network
+      den.aspects.games.minecraft
     ];
 
     provides.to-users =

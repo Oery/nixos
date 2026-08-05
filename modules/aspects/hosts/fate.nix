@@ -1,7 +1,7 @@
 { inputs, den, lib, ... }:
 {
   den.aspects.Fate = {
-    includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network ];
+    includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network den.aspects.games.minecraft ];
 
     nixos = { pkgs, ... }: {
       imports = [

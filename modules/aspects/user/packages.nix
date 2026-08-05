@@ -13,7 +13,6 @@
         vesktop
         equibop
         kitty
-        prism
 
         awww
         quickshell
@@ -54,8 +53,6 @@
         imagemagick
         playerctl
       ];
-
-      programs.prismlauncher.enable = true;
 
       manual.html.enable = false;
       manual.json.enable = false;
