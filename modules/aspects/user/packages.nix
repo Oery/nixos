@@ -55,8 +55,6 @@
         # speedtest-cli
         speed-cloudflare-cli
         ookla-speedtest
-
-        mpv
       ];
 
       manual.html.enable = false;

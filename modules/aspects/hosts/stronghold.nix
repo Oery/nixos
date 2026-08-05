@@ -143,7 +143,6 @@
         # Editors / IDEs
         emacs
         helix
-        jetbrains.idea-oss
 
         # Build tools & dev utilities
         cmake
