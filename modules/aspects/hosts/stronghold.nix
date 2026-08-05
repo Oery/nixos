@@ -77,7 +77,7 @@
         adw-gtk3
         lxappearance
         libsForQt5.qt5ct
-        qt6ct
+        qt6Packages.qt6ct
         font-manager
 
         # Desktop / GNOME utilities
@@ -143,7 +143,7 @@
         # Editors / IDEs
         emacs
         helix
-        jetbrains.idea-community
+        jetbrains.idea-oss
 
         # Build tools & dev utilities
         cmake
