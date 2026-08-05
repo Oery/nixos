@@ -31,6 +31,8 @@ in
           ];
           flake-registry = "/etc/nix/registry.json";
 
+          use-xdg-base-directories = true;
+
           keep-derivations = true;
           keep-outputs = true;
 
