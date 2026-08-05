@@ -1,4 +1,9 @@
-{ inputs, lib, den, ... }:
+{
+  inputs,
+  lib,
+  den,
+  ...
+}:
 let
   flakeInputs = lib.filterAttrs (_: v: lib.isType "flake" v) inputs;
   nixRegistry = lib.mapAttrs (_: v: { flake = v; }) flakeInputs;
