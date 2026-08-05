@@ -20,13 +20,19 @@ in
         settings = {
           auto-optimise-store = true;
           builders-use-substitutes = true;
-          experimental-features = [ "nix-command" "flakes" ];
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
           flake-registry = "/etc/nix/registry.json";
 
           keep-derivations = true;
           keep-outputs = true;
 
-          trusted-users = [ "root" "@wheel" ];
+          trusted-users = [
+            "root"
+            "@wheel"
+          ];
 
           accept-flake-config = false;
 
