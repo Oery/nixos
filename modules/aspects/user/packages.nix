@@ -29,7 +29,7 @@
         vscode
         zed-editor
         opencode
-        claude-code
+        codex
 
         rustc
         cargo
