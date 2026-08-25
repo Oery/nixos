@@ -47,11 +47,7 @@
     };
 
     apple-silicon = {
-      # Temporary: pinned to a specific rev so we don't have to rebuild the
-      # Asahi kernel from source on every flake update. Unpin once tpwrules
-      # has a working binary cache again.
-      url = "github:tpwrules/nixos-apple-silicon/0d026343730db2fc0ddb5bb127d807c2f1138f80";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nixos-apple-silicon";
     };
 
     apple-fonts = {
