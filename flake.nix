@@ -36,10 +36,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay/80b1f16dba171a70c44c2ee6ec9529876152a7f5";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-index-db = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
