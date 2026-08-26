@@ -1,4 +1,9 @@
-{ lib, den, ... }:
+{
+  config,
+  lib,
+  den,
+  ...
+}:
 {
   den.hosts.aarch64-linux.Elysium = {
     hostName = "Elysium";
@@ -30,4 +35,7 @@
 
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
   den.schema.user.includes = [ den.batteries.mutual-provider ];
+
+  flake.hydraJobs.Elysium.toplevel =
+    config.flake.nixosConfigurations.Elysium.config.system.build.toplevel;
 }
