@@ -24,7 +24,7 @@
 
         mpv
 
-        inputs.tree-sitter.packages.${pkgs.stdenv.hostPlatform.system}.default
+        tree-sitter
 
         vscode
         zed-editor
