@@ -55,7 +55,16 @@
         hardware = {
           asahi = {
             enable = true;
-            # peripheralFirmwareDirectory = /home/oery/.firmware;
+
+            peripheralFirmwareDirectory = pkgs.linkFarm "asahi-vendorfw" [
+              {
+                name = "firmware.cpio";
+                path = pkgs.fetchurl {
+                  url = "http://fate.tale-inconnu.ts.net:8482/firmware.cpio";
+                  sha256 = "ff42c9ee8397dbbe9a61c6410c16dcbe9d156b2c5ff7732a5410624445ac6fdf";
+                };
+              }
+            ];
           };
 
           graphics = {
