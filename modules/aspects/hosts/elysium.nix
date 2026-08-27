@@ -17,16 +17,19 @@
     provides.to-users =
       { user, ... }:
       lib.optionalAttrs (user.userName == "oery") {
-        homeManager.wayland.windowManager.hyprland.settings = {
-          env = [
-            "WALLPAPER_TYPE,static"
-          ];
-          input = {
-            kb_options = "caps:swapescape";
-            touchpad = {
-              disable_while_typing = true;
-              scroll_factor = 0.2;
-              natural_scroll = true;
+        homeManager.wayland.windowManager.hyprland = {
+          systemd.enable = false;
+          settings = {
+            env = [
+              "WALLPAPER_TYPE,static"
+            ];
+            input = {
+              kb_options = "caps:swapescape";
+              touchpad = {
+                disable_while_typing = true;
+                scroll_factor = 0.2;
+                natural_scroll = true;
+              };
             };
           };
         };
