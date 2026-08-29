@@ -100,8 +100,8 @@
           };
 
           font = {
-            normal.family = "Iosevka Nerd Font";
-            size = 14;
+            normal.family = "JetBrainsMono Nerd Font";
+            size = 12;
           };
 
           scrolling.multiplier = 10;
