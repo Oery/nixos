@@ -11,8 +11,6 @@
         pavucontrol
         obsidian
         vesktop
-        equibop
-        kitty
 
         awww
         quickshell
