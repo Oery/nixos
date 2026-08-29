@@ -64,6 +64,13 @@
       xdg = {
         enable = true;
 
+        terminal-exec = {
+          enable = true;
+          settings.default = [
+            "alacritty.desktop"
+          ];
+        };
+
         mime.enable = true;
         mimeApps = {
           enable = true;
