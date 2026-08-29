@@ -29,6 +29,19 @@
         enable = true;
         configurationLimit = 5;
       };
+
+      systemd.services.vendorfw = {
+        description = "Static file server for Asahi peripheral firmware";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+        serviceConfig = {
+          ExecStart = "${pkgs.darkhttpd}/bin/darkhttpd /var/lib/vendorfw --port 8482";
+          DynamicUser = true;
+          ProtectSystem = "strict";
+          PrivateTmp = true;
+          NoNewPrivileges = true;
+        };
+      };
     };
   };
 }
