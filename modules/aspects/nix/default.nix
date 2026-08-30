@@ -45,7 +45,7 @@ in
 
           substituters = [
             "https://cache.nixos.org?priority=10"
-            "http://fate:5000?priority=20"
+            "http://fate.tale-inconnu.ts.net:5000?priority=20"
             "https://helix.cachix.org"
             "https://hyprland.cachix.org"
             "https://nix-community.cachix.org"
@@ -54,7 +54,7 @@ in
 
           trusted-public-keys = [
             "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-            "fate:NPCC0Y4aaJtd5r4+7CeuSIjdcsj6Q6Gtq18JREdvMu4="
+            "fate.tale-inconnu.ts.net:NPCC0Y4aaJtd5r4+7CeuSIjdcsj6Q6Gtq18JREdvMu4="
             "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
             "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
