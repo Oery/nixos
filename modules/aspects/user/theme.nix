@@ -31,10 +31,10 @@
             size = 10;
           };
 
-          # iconTheme = {
-          #   name = "yet-another-monochrome-icon-set";
-          #   package = inputs.yamis.packages.${pkgs.stdenv.hostPlatform.system};
-          # };
+          iconTheme = {
+            name = "yet-another-monochrome-icon-set";
+            package = inputs.yamis.packages.${pkgs.stdenv.hostPlatform.system}.yamis;
+          };
 
           theme = {
             name = "Ugly-Red-Cyan";

@@ -391,6 +391,22 @@
         "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz"
       }
     },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1787900134,
+        "narHash": "sha256-VYXO0XZlgj06dxJZRhrD3WoSsvq/c7+/Akyoa22pefw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "83199d0d373dd3ac2b9a1996b1d0263f76ab7a4c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "npm-lockfile-fix": {
       "inputs": {
         "nixpkgs": [
@@ -510,6 +526,7 @@
         "nix-index-db": "nix-index-db",
         "nixpkgs": "nixpkgs_2",
         "quickshell": "quickshell",
+        "yamis": "yamis",
         "zen-browser": "zen-browser"
       }
     },
@@ -653,6 +670,21 @@
         "owner": "pyproject-nix",
         "repo": "uv2nix",
         "type": "github"
+      }
+    },
+    "yamis": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-ttzp+TKv5oNNtyYBQdNaEg2CN3ZrmYbA3ZKlX/WcDhU=",
+        "path": "./user-packages/yamis",
+        "type": "path"
+      },
+      "original": {
+        "path": "./user-packages/yamis",
+        "type": "path"
       }
     },
     "zen-browser": {
