@@ -29,7 +29,7 @@
         programs.git = {
           enable = true;
 
-          # setup signing
+          # TODO: setup signing
           signing.format = null;
 
           settings = {
