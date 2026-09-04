@@ -37,6 +37,7 @@
 
         home.activation.xdgNinjaDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           $DRY_RUN_CMD mkdir -p \
+            "${config.xdg.configHome}/codex" \
             "${config.xdg.configHome}/wakatime" \
             "${config.xdg.stateHome}/bash"
         '';
