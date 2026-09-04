@@ -677,15 +677,14 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-OHKHTMpSFOga+Wu4Irm+8IZwkgMFs5o2A6bDQxaznuU=",
         "path": "./user-packages/yamis",
         "type": "path"
       },
       "original": {
         "path": "./user-packages/yamis",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "zen-browser": {
       "inputs": {
