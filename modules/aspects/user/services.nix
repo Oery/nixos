@@ -75,6 +75,10 @@
         mimeApps = {
           enable = true;
           defaultApplications = {
+            "x-scheme-handler/http" = "zen.desktop";
+            "x-scheme-handler/https" = "zen.desktop";
+            "text/html" = "zen.desktop";
+            "application/xhtml+xml" = "zen.desktop";
             "video/mp4" = "mpv.desktop";
             "video/mkv" = "mpv.desktop";
             "video/webm" = "mpv.desktop";
