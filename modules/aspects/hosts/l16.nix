@@ -22,7 +22,6 @@
             ",preferred,auto,1.25"
           ];
           input = {
-            kb_layout = "fr";
             accel_profile = "flat";
           };
         };
