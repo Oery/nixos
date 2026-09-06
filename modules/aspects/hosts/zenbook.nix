@@ -36,19 +36,14 @@
         (modulesPath + "/installer/scan/not-detected.nix")
       ];
 
-      # boot.loader.systemd-boot.enable = true;
-
       boot.loader = {
         efi = {
           canTouchEfiVariables = true;
           efiSysMountPoint = "/boot/efi";
         };
-
-        grub = {
+        systemd-boot = {
           enable = true;
-          efiSupport = true;
-          device = "nodev";
-          useOSProber = true;
+          configurationLimit = 1;
         };
       };
 
