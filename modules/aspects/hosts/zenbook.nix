@@ -18,32 +18,39 @@
       { user, ... }:
       lib.optionalAttrs (user.userName == "oery") {
         homeManager.wayland.windowManager.hyprland.settings = {
-          monitor = ",preferred,auto,auto";
-          env = [ "WALLPAPER_TYPE,static" ];
+          monitor = [
+            ",preferred,auto,1.4"
+          ];
           input = {
             kb_layout = "fr";
-            touchpad = {
-              natural_scroll = false;
-            };
+            # touchpad = {
+            #   natural_scroll = false;
+            # };
           };
         };
       };
 
     nixos = { pkgs, modulesPath, ... }: {
       imports = [
+        ../../../host-hardware/hardware-zenbook.nix
         (modulesPath + "/installer/scan/not-detected.nix")
       ];
 
-      fileSystems."/" = {
-        device = "/dev/disk/by-uuid/9fb7be5b-3eaa-4f8d-8835-f80cf5be1544";
-        fsType = "ext4";
+      # boot.loader.systemd-boot.enable = true;
+
+      boot.loader = {
+        efi = {
+          canTouchEfiVariables = true;
+          efiSysMountPoint = "/boot/efi";
+        };
+
+        grub = {
+          enable = true;
+          efiSupport = true;
+          device = "nodev";
+          useOSProber = true;
+        };
       };
-
-      swapDevices = [
-        { device = "/dev/disk/by-uuid/74f7ad27-a469-407c-84e2-bbae7afff13d"; }
-      ];
-
-      boot.loader.systemd-boot.enable = true;
 
       services = {
         fstrim.enable = true;

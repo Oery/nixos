@@ -14,6 +14,12 @@
       fsType = "ext4";
     };
 
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/3A20-DF09";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/74f7ad27-a469-407c-84e2-bbae7afff13d"; }
     ];
