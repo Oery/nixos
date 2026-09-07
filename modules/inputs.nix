@@ -2,7 +2,7 @@
 
   flake-file.inputs = {
     yamis = {
-      url = "path:./user-packages/yamis";
+      url = "git+file:.?dir=user-packages/yamis";
     };
 
     home-manager = {
@@ -54,6 +54,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixarr = {
+      url = "github:nix-media-server/nixarr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
   };
 
 }

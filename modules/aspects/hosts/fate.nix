@@ -1,33 +1,54 @@
-{ inputs, den, lib, ... }:
+{ den, lib, ... }:
 {
   den.aspects.Fate = {
-    includes = [ den.aspects.core den.aspects.desktop den.aspects.nix den.aspects.network den.aspects.games.minecraft ];
+    includes = [
+      den.aspects.core
+      den.aspects.desktop
+      den.aspects.nix
+      den.aspects.network
+      den.aspects.games.minecraft
+      den.aspects.media
+      den.aspects.arrStack
+      den.aspects.dawarich
+      den.aspects.homeAutomation
+      den.aspects.hydra
+      den.aspects.seafile
+    ];
+
+    provides.to-users =
+      { user, ... }:
+      lib.optionalAttrs (user.userName == "oery") {
+        homeManager.wayland.windowManager.hyprland.settings.monitor = [
+          "HDMI-A-1, 1920x1080@240, auto, 1"
+        ];
+      };
 
     nixos = { pkgs, ... }: {
-      imports = [
-        ../../../host-hardware/hardware-fate.nix
-      ];
+      imports = [ ../../../host-hardware/hardware-fate.nix ];
 
-      # Make the local store available to the other machines in the tailnet.
-      # The signing key is generated once on Fate and deliberately kept outside
-      # the Nix store so it survives rebuilds without being published.
+      fileSystems."/mnt/media" = {
+        device = "/dev/disk/by-uuid/00e8627b-fe44-4c76-9e39-3a26948470f4";
+        fsType = "ext4";
+      };
+
       services.nix-serve = {
         enable = true;
         bindAddress = "0.0.0.0";
         secretKeyFile = "/var/lib/nix-serve/cache-priv-key.pem";
       };
 
-      # nix-serve listens on all interfaces because the Tailscale address is
-      # assigned dynamically. Only admit cache traffic over the tailnet.
       networking.firewall = {
         enable = true;
         allowedTCPPorts = [ 22 ];
         interfaces.tailscale0.allowedTCPPorts = [ 5000 ];
       };
 
-      boot.loader.systemd-boot = {
-        enable = true;
-        configurationLimit = 5;
+      boot = {
+        kernel.sysctl."net.ipv4.ip_forward" = lib.mkDefault 1;
+        loader.systemd-boot = {
+          enable = true;
+          configurationLimit = 5;
+        };
       };
 
       systemd.services.vendorfw = {
