@@ -6,6 +6,9 @@
   den.aspects.user.theme = {
     homeManager =
       { pkgs, config, ... }:
+      let
+        renoirTheme = pkgs.callPackage ../../../user-packages/renoir-gtk-theme.nix { };
+      in
       {
         home.pointerCursor = {
           enable = true;
@@ -37,13 +40,16 @@
           };
 
           theme = {
-            name = "Ugly-Red-Cyan";
-            package = pkgs.callPackage ../../../user-packages/ugly-red-cyan-theme.nix { };
+            name = "Renoir";
+            package = renoirTheme;
           };
 
-          gtk4.theme = {
-            name = "Ugly-Red-Cyan";
-            package = pkgs.callPackage ../../../user-packages/ugly-red-cyan-theme.nix { };
+          gtk4 = {
+            theme = null;
+            extraConfig.gtk-application-prefer-dark-theme = true;
+            extraCss = ''
+              @import url("file://${renoirTheme}/share/themes/Renoir/gtk-4.0/gtk.css");
+            '';
           };
         };
       };

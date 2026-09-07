@@ -359,6 +359,13 @@
               float = true;
             }
             {
+              name = "gtk-file-picker";
+              "match:class" = "^(xdg-desktop-portal-gtk)$";
+              center = true;
+              float = true;
+              opacity = "0.9";
+            }
+            {
               name = "zen-workspace-3";
               "match:class" = "^(zen)$";
               workspace = "3";
