@@ -3,7 +3,12 @@
   den.aspects.network = {
     nixos = { pkgs, ... }: {
       networking = {
-        nameservers = [ "9.9.9.9#dns.quad9.net" ];
+        nameservers = [
+          "1.1.1.1"
+          "1.0.0.1"
+          "2606:4700:4700::1111"
+          "2606:4700:4700::1001"
+        ];
 
         networkmanager = {
           enable = true;
@@ -11,7 +16,7 @@
           wifi.powersave = true;
         };
 
-        enableIPv6 = false;
+        enableIPv6 = true;
       };
 
       services = {
