@@ -33,7 +33,7 @@
 
           iconTheme = {
             name = "yet-another-monochrome-icon-set";
-            package = inputs.yamis.packages.${pkgs.stdenv.hostPlatform.system}.yamis;
+            package = pkgs.callPackage ../../../user-packages/yamis/package.nix { };
           };
 
           theme = {

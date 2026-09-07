@@ -1,10 +1,6 @@
 {
 
   flake-file.inputs = {
-    yamis = {
-      url = "git+file:.?dir=user-packages/yamis";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
