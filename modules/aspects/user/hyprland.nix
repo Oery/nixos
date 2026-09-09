@@ -130,7 +130,7 @@
           };
 
           bind = [
-            "Super, A, exec, zen"
+            "Super, A, exec, zen-beta"
             "Super, Z, exec, code"
             "Super, E, exec, nautilus --new-window"
             "Super, T, exec, alacritty"
@@ -367,12 +367,12 @@
             }
             {
               name = "zen-workspace-3";
-              "match:class" = "^(zen)$";
+              "match:class" = "^(zen-beta)$";
               workspace = "3";
             }
             {
               name = "zen-twitch-opacity";
-              "match:class" = "^(zen)$";
+              "match:class" = "^(zen-beta)$";
               "match:title" = "^(.*)( - Twitch)(.*)$";
               opacity = "1";
             }
