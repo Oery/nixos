@@ -50,6 +50,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    omp = {
+      url = "github:Oery/omp-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixarr = {
       url = "github:nix-media-server/nixarr";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -28,6 +28,7 @@
         zed-editor
         opencode
         codex
+        inputs.omp.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         rustc
         cargo
