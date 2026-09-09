@@ -510,6 +510,26 @@
               xray = true;
             }
             {
+              name = "blur-quickshell-osd";
+              "match:namespace" = "quickshell-osd";
+              blur = true;
+            }
+            {
+              name = "ignore-alpha-quickshell-osd";
+              "match:namespace" = "quickshell-osd";
+              ignore_alpha = 0.2;
+            }
+            {
+              name = "blur-quickshell-overlays";
+              "match:namespace" = "quickshell-(panel|launcher)";
+              blur = true;
+            }
+            {
+              name = "ignore-alpha-quickshell-overlays";
+              "match:namespace" = "quickshell-(panel|launcher)";
+              ignore_alpha = 0.2;
+            }
+            {
               name = "blur-vicinae";
               "match:namespace" = "vicinae";
               blur = true;
