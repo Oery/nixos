@@ -1,6 +1,8 @@
 { den, ... }:
 {
   den.aspects.user.cli-tools = {
+    includes = [ den.aspects.user.fastfetch ];
+
     homeManager =
       { pkgs, config, ... }:
       let
@@ -73,8 +75,6 @@
             theme_background = false;
           };
         };
-
-        programs.fastfetch.enable = true;
 
         programs.lsd = {
           enable = true;
