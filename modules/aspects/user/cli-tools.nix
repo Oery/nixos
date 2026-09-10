@@ -58,11 +58,6 @@
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
-
-          settings."Host eden" = {
-            HostName = "149.202.45.32";
-            User = "root";
-          };
         };
 
         programs.bat.enable = true;
