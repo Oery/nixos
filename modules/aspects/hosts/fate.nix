@@ -37,6 +37,36 @@
         secretKeyFile = "/var/lib/nix-serve/cache-priv-key.pem";
       };
 
+      services.samba = {
+        enable = true;
+        openFirewall = true;
+        settings = {
+          global = {
+            "workgroup" = "WORKGROUP";
+            "server string" = "Fate file server";
+            "server role" = "standalone server";
+            "security" = "user";
+            "map to guest" = "never";
+            "server min protocol" = "SMB2_10";
+          };
+
+          media = {
+            path = "/mnt/media";
+            browseable = "yes";
+            "read only" = "no";
+            "guest ok" = "no";
+            "valid users" = "oery";
+            "create mask" = "0664";
+            "directory mask" = "0775";
+          };
+        };
+      };
+
+      services.samba-wsdd = {
+        enable = true;
+        openFirewall = true;
+      };
+
       networking.firewall = {
         enable = true;
         allowedTCPPorts = [ 22 ];

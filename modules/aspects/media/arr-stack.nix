@@ -23,7 +23,10 @@
           extraAllowedIps = [ "100.*" ];
           vpn.enable = true;
           peerPort = 51413;
-          extraSettings.rpc-host-whitelist-enabled = false;
+          extraSettings = {
+            download-queue-size = 2;
+            rpc-host-whitelist-enabled = false;
+          };
         };
 
         vpn = {
