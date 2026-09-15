@@ -46,11 +46,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     omp = {
       url = "github:Oery/omp-flake";
       inputs.nixpkgs.follows = "nixpkgs";
