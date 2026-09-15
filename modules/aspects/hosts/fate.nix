@@ -26,6 +26,9 @@
     nixos = { pkgs, ... }: {
       imports = [ ../../../host-hardware/hardware-fate.nix ];
 
+      # Fate is the lab host and should remain at a console after boot.
+      services.greetd.enable = lib.mkForce false;
+
       fileSystems."/mnt/media" = {
         device = "/dev/disk/by-uuid/00e8627b-fe44-4c76-9e39-3a26948470f4";
         fsType = "ext4";
