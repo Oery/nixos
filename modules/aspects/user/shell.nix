@@ -85,14 +85,26 @@
               '';
             };
 
-            "42" = {
-              description = "Start 42 Dev shell";
+            fclean_all = {
+              description = "Run `make fclean` in all subdirectories";
               body = ''
-                if not string match '*42*' $PWD
-                  cd /home/oery/Documents/42
+                for d in */
+                  if test -f "$d/Makefile" -o -f "$d/makefile" -o -f "$d/GNUmakefile"
+                    echo "==> $d"
+                    make -C "$d" fclean
+                  end
                 end
               '';
             };
+
+            "42" = {
+               description = "Start 42 Dev shell";
+               body = ''
+                 if not string match '*42*' $PWD
+                   cd /home/oery/Documents/42
+                 end
+               '';
+             };
           };
         };
 
