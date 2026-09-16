@@ -40,7 +40,7 @@
       url = "github:nix-media-server/nixarr";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     omp = {
       url = "github:Oery/omp-flake";
       inputs.nixpkgs.follows = "nixpkgs";
