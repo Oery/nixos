@@ -816,11 +816,6 @@ scrollbar slider:active {
   background-color: #888888;
 }
 
-/* Keep application chrome monochrome without filtering photos and previews. */
-image {
-  -gtk-icon-filter: grayscale(1);
-}
-
 *:focus-visible {
   outline-color: #a0a0a0;
 }
