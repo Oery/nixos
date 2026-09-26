@@ -56,6 +56,8 @@
         ookla-speedtest
       ];
 
+      programs.herdr.enable = true;
+
       manual.html.enable = false;
       manual.json.enable = false;
       manual.manpages.enable = false;
