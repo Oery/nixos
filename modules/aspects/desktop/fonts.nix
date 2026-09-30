@@ -2,6 +2,16 @@
 {
   den.aspects.fonts = {
     nixos = { pkgs, ... }: {
+      # Iosevka uses nodejs_latest (26), whose V8 fails to compile on aarch64
+      # because memcopy.h uses CHAR_BIT without including <climits>.
+      nixpkgs.overlays = [
+        (final: prev: {
+          iosevka = prev.iosevka.override {
+            nodejs_latest = final.nodejs_24;
+          };
+        })
+      ];
+
       fonts = {
         packages = with pkgs; [
           material-symbols
