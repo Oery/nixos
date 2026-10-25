@@ -10,10 +10,10 @@
           noto-fonts-cjk-sans
           noto-fonts-color-emoji
 
-          iosevka
+          # iosevka
           jetbrains-mono
 
-          nerd-fonts.iosevka
+          # nerd-fonts.iosevka
           nerd-fonts.jetbrains-mono
           nerd-fonts.symbols-only
 
