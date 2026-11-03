@@ -16,7 +16,7 @@ in
       environment.variables.NH_OS_FLAKE = "/etc/nixos";
 
       nix = {
-        package = pkgs.lix;
+        package = pkgs.nixVersions.nix_2_35;
 
         registry = nixRegistry;
 
