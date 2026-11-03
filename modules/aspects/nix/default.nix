@@ -31,6 +31,9 @@ in
           ];
           flake-registry = "/etc/nix/registry.json";
 
+          timeout = 86400;
+          max-silent-time = 7200;
+
           use-xdg-base-directories = true;
 
           keep-derivations = true;
