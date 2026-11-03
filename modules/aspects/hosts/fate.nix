@@ -12,6 +12,7 @@
       den.aspects.dawarich
       den.aspects.homeAutomation
       den.aspects.hydra
+      den.aspects.discordBot
       den.aspects.seafile
     ];
 
