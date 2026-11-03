@@ -14,6 +14,7 @@
       den.aspects.hydra
       den.aspects.discordBot
       den.aspects.seafile
+      den.aspects.shade
     ];
 
     provides.to-users =

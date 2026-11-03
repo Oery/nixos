@@ -32,6 +32,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:denful/import-tree";
+    mcp-servers = {
+      url = "git+https://github.com/Oery/my-mcp-servers.git";
+      flake = false;
+    };
     nix-index-db = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,6 +51,10 @@
     };
     quickshell = {
       url = "github:quickshell-mirror/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    shade = {
+      url = "github:Oery/Shade";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {

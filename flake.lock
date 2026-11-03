@@ -258,6 +258,22 @@
         "type": "github"
       }
     },
+    "mcp-servers": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793741745,
+        "narHash": "sha256-Rhs4qnA6TvLHBWO6o6nluAQRyQhTGbiWwI4ZYeF4vq0=",
+        "ref": "refs/heads/main",
+        "rev": "a4e7457d628ebea0ea7d3dee1657b3f23715b662",
+        "revCount": 9,
+        "type": "git",
+        "url": "https://github.com/Oery/my-mcp-servers.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/Oery/my-mcp-servers.git"
+      }
+    },
     "nix-index-db": {
       "inputs": {
         "nixpkgs": [
@@ -413,12 +429,35 @@
         "home-manager": "home-manager",
         "hytale-launcher": "hytale-launcher",
         "import-tree": "import-tree",
+        "mcp-servers": "mcp-servers",
         "nix-index-db": "nix-index-db",
         "nixarr": "nixarr",
         "nixpkgs": "nixpkgs_2",
         "omp": "omp",
         "quickshell": "quickshell",
+        "shade": "shade",
         "zen-browser": "zen-browser"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "shade",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793697474,
+        "narHash": "sha256-KgJnMIR0ltd7pMcpDWn5q40bzmC7xtlb71clPFNUu+Y=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "fb3eee9d296214ebbcc53921f34e80bb4166e859",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "sf-arabic": {
@@ -503,6 +542,27 @@
       "original": {
         "type": "file",
         "url": "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg"
+      }
+    },
+    "shade": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1793746823,
+        "narHash": "sha256-y8Crn8dcwMMagAxYwPAS8yIyh45V9X/nDpNua71CB0U=",
+        "owner": "Oery",
+        "repo": "Shade",
+        "rev": "e67d6ee53b56dee91705f5ce707239b02a4a800d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Oery",
+        "repo": "Shade",
+        "type": "github"
       }
     },
     "systems": {

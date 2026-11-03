@@ -51,6 +51,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    shade = {
+      url = "github:Oery/Shade";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mcp-servers = {
+      url = "git+https://github.com/Oery/my-mcp-servers.git";
+      flake = false;
+    };
+
     nixarr = {
       url = "github:nix-media-server/nixarr";
       inputs.nixpkgs.follows = "nixpkgs";
