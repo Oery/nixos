@@ -18,10 +18,13 @@
       { user, ... }:
       lib.optionalAttrs (user.userName == "oery") {
         homeManager.wayland.windowManager.hyprland.settings = {
-          monitor = [
-            ",preferred,auto,1.4"
-          ];
-          input = {
+          monitor = {
+            output = "";
+            mode = "preferred";
+            position = "auto";
+            scale = 1.4;
+          };
+          config.input = {
             kb_layout = "fr";
             # touchpad = {
             #   natural_scroll = false;

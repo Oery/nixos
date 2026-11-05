@@ -21,9 +21,9 @@
           systemd.enable = false;
           settings = {
             env = [
-              "WALLPAPER_TYPE,static"
+              { _args = [ "WALLPAPER_TYPE" "static" ]; }
             ];
-            input = {
+            config.input = {
               kb_options = "caps:swapescape";
               touchpad = {
                 disable_while_typing = true;

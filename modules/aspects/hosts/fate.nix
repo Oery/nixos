@@ -20,9 +20,12 @@
     provides.to-users =
       { user, ... }:
       lib.optionalAttrs (user.userName == "oery") {
-        homeManager.wayland.windowManager.hyprland.settings.monitor = [
-          "HDMI-A-1, 1920x1080@240, auto, 1"
-        ];
+        homeManager.wayland.windowManager.hyprland.settings.monitor = {
+          output = "HDMI-A-1";
+          mode = "1920x1080@240";
+          position = "auto";
+          scale = 1;
+        };
       };
 
     nixos = { pkgs, ... }: {

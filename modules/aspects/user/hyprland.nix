@@ -1,543 +1,942 @@
 { den, lib, ... }:
+let
+  lua = lib.generators.mkLuaInline;
+  bind = keys: action: {
+    _args = [
+      keys
+      (lua action)
+    ];
+  };
+  bindWith = flags: keys: action: {
+    _args = [
+      keys
+      (lua action)
+      flags
+    ];
+  };
+  exec = keys: command: bind keys "hl.dsp.exec_cmd(${builtins.toJSON command})";
+  execWith =
+    flags: keys: command:
+    bindWith flags keys "hl.dsp.exec_cmd(${builtins.toJSON command})";
+  env = name: value: {
+    _args = [
+      name
+      value
+    ];
+  };
+  curve = name: points: {
+    _args = [
+      name
+      {
+        type = "bezier";
+        inherit points;
+      }
+    ];
+  };
+in
 {
   den.aspects.user.hyprland = {
     homeManager = {
       wayland.windowManager.hyprland = {
         enable = true;
         systemd.enable = false;
-        configType = "hyprlang";
+        configType = "lua";
 
+        # Lua API calls rendered by Home Manager (Hyprland 0.57+).
         settings = {
-          env = [
-            "XDG_CURRENT_DESKTOP,Hyprland"
-            "XDG_SESSION_TYPE,wayland"
-            "XDG_SESSION_DESKTOP,Hyprland"
-            "QT_AUTO_SCREEN_SCALE_FACTOR,1"
-            "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-            "QT_QPA_PLATFORM,wayland"
-            "ELECTRON_OZONE_PLATFORM_HINT,auto"
-            "HYPRLAND_TRACE,0"
-          ];
-
-          exec-once = [
-            "hyprlock"
-            "qs -c oery"
-            "wired"
-            "hyprctl setcursor Bibata-Modern-Classic 24"
-            "easyeffects --gapplication-service"
-          ];
-
-          input = {
-            repeat_delay = 250;
-            repeat_rate = 35;
-            kb_options = "caps:swapescape";
-            numlock_by_default = true;
-            touchpad = {
-              disable_while_typing = lib.mkDefault true;
-              scroll_factor = lib.mkDefault 0.2;
-              natural_scroll = true;
-            };
-          };
-
-          general = {
-            "col.active_border" = "rgba(080808E6)";
-            "col.inactive_border" = "rgb(000000)";
-            allow_tearing = false;
-            border_size = 0;
-            gaps_in = 2.5;
-            gaps_out = 5;
-            gaps_workspaces = 50;
-            layout = "dwindle";
-          };
-
-          decoration = {
-            rounding = 4;
-            blur = {
+          config = {
+            animations = {
               enabled = true;
-              popups = true;
-              new_optimizations = true;
-              size = 6;
-              passes = 3;
             };
-            shadow = {
-              enabled = true;
-              range = 4;
-              render_power = 3;
-              color = "rgba(1a1a1aee)";
+            binds = {
+              scroll_event_delay = 0;
             };
-          };
-
-          misc = {
-            force_default_wallpaper = 0;
-            disable_hyprland_logo = true;
-            animate_manual_resizes = true;
-            animate_mouse_windowdragging = true;
-            on_focus_under_fullscreen = 1;
-            enable_anr_dialog = false;
-          };
-
-          ecosystem.no_update_news = true;
-
-          binds.scroll_event_delay = 0;
-
-          cursor.no_hardware_cursors = 2;
-
-          dwindle = {
-            preserve_split = true;
-            force_split = 2;
-            smart_split = false;
-            smart_resizing = false;
-          };
-
-          debug.overlay = 0;
-
-          animations = {
-            enabled = true;
-            bezier = [
-              "linear, 0, 0, 1, 1"
-              "md3_standard, 0.2, 0, 0, 1"
-              "md3_decel, 0.05, 0.7, 0.1, 1"
-              "md3_accel, 0.3, 0, 0.8, 0.15"
-              "overshot, 0.05, 0.9, 0.1, 1.1"
-              "crazyshot, 0.1, 1.5, 0.76, 0.92"
-              "hyprnostretch, 0.05, 0.9, 0.1, 1.0"
-              "fluent_decel, 0.1, 1, 0, 1"
-              "easeInOutCirc, 0.85, 0, 0.15, 1"
-              "easeOutCirc, 0, 0.55, 0.45, 1"
-              "easeOutExpo, 0.16, 1, 0.3, 1"
-              "wind, 0.05, 0.9, 0.1, 1.05"
-              "winIn, 0.1, 1.1, 0.1, 1.1"
-              "winOut, 0.3, -0.3, 0, 1"
-              "liner, 1, 1, 1, 1"
-              "smoothOut, 0.5, 0, 0.99, 0.99"
-              "smoothIn, 0.5, -0.5, 0.68, 1.5"
-            ];
-            animation = [
-              "border, 1, 10, default"
-              "fade, 1, 2.5, md3_decel"
-              "workspaces, 1, 3.5, easeOutExpo, slide"
-              "specialWorkspace, 1, 3, md3_decel, slidevert"
-              "windows, 1, 2, wind, slide"
-              "windowsIn, 1, 3, md3_decel, slide bottom"
-              "windowsOut, 1, 2, smoothOut, slide"
-              "windowsMove, 1, 2, wind, slide"
-              "layersIn, 1, 2, md3_decel, slide"
-              "layersOut, 1, 2, smoothOut, slide"
-              "border, 1, 1, liner"
-              "fade, 1, 2, smoothOut"
-              "fadeLayersIn, 0, 0, liner"
-            ];
-          };
-
-          bind = [
-            "Super, A, exec, zen-beta"
-            "Super, Z, exec, code"
-            "Super, E, exec, nautilus --new-window"
-            "Super, T, exec, alacritty"
-            "Super, S, exec, spotify-launcher"
-            "Super, O, exec, obsidian"
-            "Ctrl+Super, M, exit"
-            "Super, code:49, exec, qs -c oery ipc call leftpanel toggle"
-            "Super, Backspace, exec, qs -c oery ipc call rightpanel toggle"
-            "Super, R, exec, qs -c oery ipc call launcher toggle"
-            ", XF86Search, exec, qs -c oery ipc call launcher toggle"
-            "Super, C, killactive,"
-            "Super, V, togglefloating,"
-            "Super, F, fullscreen, 0"
-            "Super+Alt, F, fullscreenstate, 0 3"
-            "Ctrl+Super, Backslash, resizeactive, exact 770 520"
-            "Super, Tab, cyclenext"
-            "Super, code:10, workspace, 1"
-            "Super, code:11, workspace, 2"
-            "Super, code:12, workspace, 3"
-            "Super, code:13, workspace, 4"
-            "Super, code:14, workspace, 5"
-            "Super, code:15, workspace, 6"
-            "Super, code:16, workspace, 7"
-            "Super, code:17, workspace, 8"
-            "Super, code:18, workspace, 9"
-            "Super, code:19, workspace, 10"
-            "Super+Shift, code:10, movetoworkspace, 1"
-            "Super+Shift, code:11, movetoworkspace, 2"
-            "Super+Shift, code:12, movetoworkspace, 3"
-            "Super+Shift, code:13, movetoworkspace, 4"
-            "Super+Shift, code:14, movetoworkspace, 5"
-            "Super+Shift, code:15, movetoworkspace, 6"
-            "Super+Shift, code:16, movetoworkspace, 7"
-            "Super+Shift, code:17, movetoworkspace, 8"
-            "Super+Shift, code:18, movetoworkspace, 9"
-            "Super+Shift, code:19, movetoworkspace, 10"
-            "Super, left, movefocus, l"
-            "Super, right, movefocus, r"
-            "Super, up, movefocus, u"
-            "Super, down, movefocus, d"
-            "Super+Shift, left, movewindow, l"
-            "Super+Shift, right, movewindow, r"
-            "Super+Shift, up, movewindow, u"
-            "Super+Shift, down, movewindow, d"
-            "Super+Shift, C, exec, hyprpicker --autocopy"
-            "Super, Space, exec, ~/.config/hypr/scripts/cycle-kbd-backlight.sh"
-            "Super+Shift, Space, exec, ~/.config/hypr/scripts/cycle-kbd-backlight.sh reverse"
-            "Super+Shift, S, exec, grimblast -n -f copysave area"
-            "Super+Shift+Alt, S, exec, grimblast -g \"$(slurp)\" - | swappy -f -"
-            "Alt, R, exec, pavucontrol"
-            ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-            ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-            "Ctrl+Shift, M, pass, class:^(vesktop)$"
-            "Super, L, exec, hyprlock"
-            ", XF86Sleep, exec, hyprlock"
-            "Super, I, exec, XDG_CURRENT_DESKTOP=\"gnome\" gnome-control-center"
-          ];
-
-          binde = [
-            "Super, Minus, resizeactive, -100 -100"
-            "Super, Equal, resizeactive, 100 100"
-          ];
-
-          bindl = [
-            ", Print, exec, sh ~/.config/ags/scripts/screenshot-active.sh"
-            "Ctrl, Print, exec, mkdir -p ~/Pictures/Screenshots && ~/.config/ags/scripts/grimblast.sh copysave screen ~/Pictures/Screenshots/Screenshot_\"$(date '+%Y-%m-%d_%H.%M.%S')\".png"
-            ", XF86AudioPlay, exec, playerctl play-pause"
-            ", XF86AudioMicMute, sendshortcut, Ctrl+Shift, M, class:^(vesktop)$"
-          ];
-
-          bindle = [
-            ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-            ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-            ", XF86MonBrightnessUp, exec, brightnessctl set \"12.75+\" && qs -c oery ipc call brightness display"
-            ", XF86MonBrightnessDown, exec, brightnessctl set \"12.75-\" && qs -c oery ipc call brightness display"
-          ];
-
-          bindm = [
-            "Super, mouse:272, movewindow"
-            "Super, mouse:273, resizewindow"
-          ];
-
-          windowrule = [
-            {
-              name = "bordersize-zero-workspace-wt1";
-              "match:workspace" = "w[t1]";
+            cursor = {
+              no_hardware_cursors = 2;
+            };
+            debug = {
+              overlay = 0;
+            };
+            decoration = {
+              blur = {
+                enabled = true;
+                new_optimizations = true;
+                passes = 3;
+                popups = true;
+                size = 6;
+              };
+              rounding = 4;
+              shadow = {
+                color = "rgba(1a1a1aee)";
+                enabled = true;
+                range = 4;
+                render_power = 3;
+              };
+            };
+            dwindle = {
+              force_split = 2;
+              preserve_split = true;
+              smart_resizing = false;
+              smart_split = false;
+            };
+            ecosystem = {
+              no_update_news = true;
+            };
+            general = {
+              allow_tearing = false;
               border_size = 0;
+              gaps_in = 2.5;
+              gaps_out = 5;
+              gaps_workspaces = 50;
+              layout = "dwindle";
+              col = {
+                active_border = "rgba(080808E6)";
+                inactive_border = "rgb(000000)";
+              };
+            };
+            input = {
+              kb_options = "caps:swapescape";
+              numlock_by_default = true;
+              repeat_delay = 250;
+              repeat_rate = 35;
+              touchpad = {
+                disable_while_typing = lib.mkDefault true;
+                natural_scroll = true;
+                scroll_factor = lib.mkDefault 0.2;
+              };
+            };
+            misc = {
+              animate_manual_resizes = true;
+              animate_mouse_windowdragging = true;
+              disable_hyprland_logo = true;
+              enable_anr_dialog = false;
+              force_default_wallpaper = 0;
+              on_focus_under_fullscreen = 1;
+            };
+          };
+          env = [
+            (env "XDG_CURRENT_DESKTOP" "Hyprland")
+            (env "XDG_SESSION_TYPE" "wayland")
+            (env "XDG_SESSION_DESKTOP" "Hyprland")
+            (env "QT_AUTO_SCREEN_SCALE_FACTOR" "1")
+            (env "QT_WAYLAND_DISABLE_WINDOWDECORATION" "1")
+            (env "QT_QPA_PLATFORM" "wayland")
+            (env "ELECTRON_OZONE_PLATFORM_HINT" "auto")
+            (env "HYPRLAND_TRACE" "0")
+          ];
+          on = {
+            _args = [
+              "hyprland.start"
+              (lua ''
+                function()
+                  hl.exec_cmd("hyprlock")
+                  hl.exec_cmd("qs -c oery")
+                  hl.exec_cmd("wired")
+                  hl.exec_cmd("hyprctl setcursor Bibata-Modern-Classic 24")
+                  hl.exec_cmd("easyeffects --gapplication-service")
+                end
+              '')
+            ];
+          };
+          curve = [
+            (curve "linear" [
+              [
+                0.0
+                0.0
+              ]
+              [
+                1.0
+                1.0
+              ]
+            ])
+            (curve "md3_standard" [
+              [
+                0.2
+                0.0
+              ]
+              [
+                0.0
+                1.0
+              ]
+            ])
+            (curve "md3_decel" [
+              [
+                0.05
+                0.7
+              ]
+              [
+                0.1
+                1.0
+              ]
+            ])
+            (curve "md3_accel" [
+              [
+                0.3
+                0.0
+              ]
+              [
+                0.8
+                0.15
+              ]
+            ])
+            (curve "overshot" [
+              [
+                0.05
+                0.9
+              ]
+              [
+                0.1
+                1.1
+              ]
+            ])
+            (curve "crazyshot" [
+              [
+                0.1
+                1.5
+              ]
+              [
+                0.76
+                0.92
+              ]
+            ])
+            (curve "hyprnostretch" [
+              [
+                0.05
+                0.9
+              ]
+              [
+                0.1
+                1.0
+              ]
+            ])
+            (curve "fluent_decel" [
+              [
+                0.1
+                1.0
+              ]
+              [
+                0.0
+                1.0
+              ]
+            ])
+            (curve "easeInOutCirc" [
+              [
+                0.85
+                0.0
+              ]
+              [
+                0.15
+                1.0
+              ]
+            ])
+            (curve "easeOutCirc" [
+              [
+                0.0
+                0.55
+              ]
+              [
+                0.45
+                1.0
+              ]
+            ])
+            (curve "easeOutExpo" [
+              [
+                0.16
+                1.0
+              ]
+              [
+                0.3
+                1.0
+              ]
+            ])
+            (curve "wind" [
+              [
+                0.05
+                0.9
+              ]
+              [
+                0.1
+                1.05
+              ]
+            ])
+            (curve "winIn" [
+              [
+                0.1
+                1.1
+              ]
+              [
+                0.1
+                1.1
+              ]
+            ])
+            (curve "winOut" [
+              [
+                0.3
+                (-0.3)
+              ]
+              [
+                0.0
+                1.0
+              ]
+            ])
+            (curve "liner" [
+              [
+                1.0
+                1.0
+              ]
+              [
+                1.0
+                1.0
+              ]
+            ])
+            (curve "smoothOut" [
+              [
+                0.5
+                0.0
+              ]
+              [
+                0.99
+                0.99
+              ]
+            ])
+            (curve "smoothIn" [
+              [
+                0.5
+                (-0.5)
+              ]
+              [
+                0.68
+                1.5
+              ]
+            ])
+          ];
+          animation = [
+            {
+              leaf = "border";
+              enabled = true;
+              speed = 10.0;
+              bezier = "default";
+            }
+            {
+              leaf = "fade";
+              enabled = true;
+              speed = 2.5;
+              bezier = "md3_decel";
+            }
+            {
+              leaf = "workspaces";
+              enabled = true;
+              speed = 3.5;
+              bezier = "easeOutExpo";
+              style = "slide";
+            }
+            {
+              leaf = "specialWorkspace";
+              enabled = true;
+              speed = 3.0;
+              bezier = "md3_decel";
+              style = "slidevert";
+            }
+            {
+              leaf = "windows";
+              enabled = true;
+              speed = 2.0;
+              bezier = "wind";
+              style = "slide";
+            }
+            {
+              leaf = "windowsIn";
+              enabled = true;
+              speed = 3.0;
+              bezier = "md3_decel";
+              style = "slide bottom";
+            }
+            {
+              leaf = "windowsOut";
+              enabled = true;
+              speed = 2.0;
+              bezier = "smoothOut";
+              style = "slide";
+            }
+            {
+              leaf = "windowsMove";
+              enabled = true;
+              speed = 2.0;
+              bezier = "wind";
+              style = "slide";
+            }
+            {
+              leaf = "layersIn";
+              enabled = true;
+              speed = 2.0;
+              bezier = "md3_decel";
+              style = "slide";
+            }
+            {
+              leaf = "layersOut";
+              enabled = true;
+              speed = 2.0;
+              bezier = "smoothOut";
+              style = "slide";
+            }
+            {
+              leaf = "border";
+              enabled = true;
+              speed = 1.0;
+              bezier = "liner";
+            }
+            {
+              leaf = "fade";
+              enabled = true;
+              speed = 2.0;
+              bezier = "smoothOut";
+            }
+            {
+              leaf = "fadeLayersIn";
+              enabled = false;
+              speed = 0.0;
+              bezier = "liner";
+            }
+          ];
+          bind = [
+            (exec "Super + A" "zen-beta")
+            (exec "Super + Z" "code")
+            (exec "Super + E" "nautilus --new-window")
+            (exec "Super + T" "alacritty")
+            (exec "Super + S" "spotify-launcher")
+            (exec "Super + O" "obsidian")
+            (bind "Ctrl + Super + M" "hl.dsp.exit()")
+            (exec "Super + code:49" "qs -c oery ipc call leftpanel toggle")
+            (exec "Super + Backspace" "qs -c oery ipc call rightpanel toggle")
+            (exec "Super + R" "qs -c oery ipc call launcher toggle")
+            (exec "XF86Search" "qs -c oery ipc call launcher toggle")
+            (bind "Super + C" "hl.dsp.window.close()")
+            (bind "Super + V" "hl.dsp.window.float({ action = \"toggle\" })")
+            (bind "Super + F" "hl.dsp.window.fullscreen({ mode = \"fullscreen\" })")
+            (bind "Super + Alt + F" "hl.dsp.window.fullscreen_state({ internal = 0, client = 3 })")
+            (bind "Ctrl + Super + Backslash" "hl.dsp.window.resize({ x = 770, y = 520, relative = false })")
+            (bind "Super + Tab" "hl.dsp.window.cycle_next()")
+            (bind "Super + code:10" "hl.dsp.focus({ workspace = 1 })")
+            (bind "Super + code:11" "hl.dsp.focus({ workspace = 2 })")
+            (bind "Super + code:12" "hl.dsp.focus({ workspace = 3 })")
+            (bind "Super + code:13" "hl.dsp.focus({ workspace = 4 })")
+            (bind "Super + code:14" "hl.dsp.focus({ workspace = 5 })")
+            (bind "Super + code:15" "hl.dsp.focus({ workspace = 6 })")
+            (bind "Super + code:16" "hl.dsp.focus({ workspace = 7 })")
+            (bind "Super + code:17" "hl.dsp.focus({ workspace = 8 })")
+            (bind "Super + code:18" "hl.dsp.focus({ workspace = 9 })")
+            (bind "Super + code:19" "hl.dsp.focus({ workspace = 10 })")
+            (bind "Super + Shift + code:10" "hl.dsp.window.move({ workspace = 1, follow = true })")
+            (bind "Super + Shift + code:11" "hl.dsp.window.move({ workspace = 2, follow = true })")
+            (bind "Super + Shift + code:12" "hl.dsp.window.move({ workspace = 3, follow = true })")
+            (bind "Super + Shift + code:13" "hl.dsp.window.move({ workspace = 4, follow = true })")
+            (bind "Super + Shift + code:14" "hl.dsp.window.move({ workspace = 5, follow = true })")
+            (bind "Super + Shift + code:15" "hl.dsp.window.move({ workspace = 6, follow = true })")
+            (bind "Super + Shift + code:16" "hl.dsp.window.move({ workspace = 7, follow = true })")
+            (bind "Super + Shift + code:17" "hl.dsp.window.move({ workspace = 8, follow = true })")
+            (bind "Super + Shift + code:18" "hl.dsp.window.move({ workspace = 9, follow = true })")
+            (bind "Super + Shift + code:19" "hl.dsp.window.move({ workspace = 10, follow = true })")
+            (bind "Super + left" "hl.dsp.focus({ direction = \"left\" })")
+            (bind "Super + right" "hl.dsp.focus({ direction = \"right\" })")
+            (bind "Super + up" "hl.dsp.focus({ direction = \"up\" })")
+            (bind "Super + down" "hl.dsp.focus({ direction = \"down\" })")
+            (bind "Super + Shift + left" "hl.dsp.window.move({ direction = \"left\" })")
+            (bind "Super + Shift + right" "hl.dsp.window.move({ direction = \"right\" })")
+            (bind "Super + Shift + up" "hl.dsp.window.move({ direction = \"up\" })")
+            (bind "Super + Shift + down" "hl.dsp.window.move({ direction = \"down\" })")
+            (exec "Super + Shift + C" "hyprpicker --autocopy")
+            (exec "Super + Space" "~/.config/hypr/scripts/cycle-kbd-backlight.sh")
+            (exec "Super + Shift + Space" "~/.config/hypr/scripts/cycle-kbd-backlight.sh reverse")
+            (exec "Super + Shift + S" "grimblast -n -f copysave area")
+            (exec "Super + Shift + Alt + S" "grimblast -g \"$(slurp)\" - | swappy -f -")
+            (exec "Alt + R" "pavucontrol")
+            (exec "XF86AudioMute" "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")
+            (exec "XF86AudioMicMute" "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle")
+            (bind "Ctrl + Shift + M" "hl.dsp.pass({ window = \"class:^(vesktop)$\" })")
+            (exec "Super + L" "hyprlock")
+            (exec "XF86Sleep" "hyprlock")
+            (exec "Super + I" "XDG_CURRENT_DESKTOP=\"gnome\" gnome-control-center")
+            (bindWith {
+              repeating = true;
+            } "Super + Minus" "hl.dsp.window.resize({ x = -100, y = -100, relative = true })")
+            (bindWith {
+              repeating = true;
+            } "Super + Equal" "hl.dsp.window.resize({ x = 100, y = 100, relative = true })")
+            (execWith { locked = true; } "Print" "sh ~/.config/ags/scripts/screenshot-active.sh")
+            (execWith { locked = true; } "Ctrl + Print"
+              "mkdir -p ~/Pictures/Screenshots && ~/.config/ags/scripts/grimblast.sh copysave screen ~/Pictures/Screenshots/Screenshot_\"$(date '+%Y-%m-%d_%H.%M.%S')\".png"
+            )
+            (execWith { locked = true; } "XF86AudioPlay" "playerctl play-pause")
+            (bindWith { locked = true; } "XF86AudioMicMute"
+              "hl.dsp.send_shortcut({ mods = \"Ctrl+Shift\", key = \"M\", window = \"class:^(vesktop)$\" })"
+            )
+            (execWith {
+              repeating = true;
+              locked = true;
+            } "XF86AudioRaiseVolume" "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+")
+            (execWith {
+              repeating = true;
+              locked = true;
+            } "XF86AudioLowerVolume" "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-")
+            (execWith {
+              repeating = true;
+              locked = true;
+            } "XF86MonBrightnessUp" "brightnessctl set \"12.75+\" && qs -c oery ipc call brightness display")
+            (execWith {
+              repeating = true;
+              locked = true;
+            } "XF86MonBrightnessDown" "brightnessctl set \"12.75-\" && qs -c oery ipc call brightness display")
+            (bind "Super + mouse:272" "hl.dsp.window.drag()")
+            (bind "Super + mouse:273" "hl.dsp.window.resize()")
+          ];
+          window_rule = [
+            {
+              border_size = 0;
+              name = "bordersize-zero-workspace-wt1";
+              match = {
+                workspace = "w[t1]";
+              };
             }
             {
               name = "code-workspace-2";
-              "match:class" = "^(code)$";
               workspace = "2";
+              match = {
+                class = "^(code)$";
+              };
             }
             {
               name = "zed-workspace-2";
-              "match:class" = "^(dev.zed.Zed)$";
               workspace = "2";
+              match = {
+                class = "^(dev.zed.Zed)$";
+              };
             }
             {
               name = "vesktop-workspace-4";
-              "match:class" = "^(vesktop)$";
               workspace = "4";
+              match = {
+                class = "^(vesktop)$";
+              };
             }
             {
               name = "vesktop-opacity";
-              "match:class" = "^(vesktop)$";
               opacity = "0.94";
+              match = {
+                class = "^(vesktop)$";
+              };
             }
             {
               name = "discord-popout-opacity";
-              "match:initial_title" = "^(Discord Popout)$";
               opacity = "1";
+              match = {
+                initial_title = "^(Discord Popout)$";
+              };
             }
             {
               name = "steam-tile";
-              "match:class" = "^(steam)$";
               tile = true;
+              match = {
+                class = "^(steam)$";
+              };
             }
             {
-              name = "steam-float";
-              "match:class" = "^(steam)$";
-              "match:title" = "^()$";
               float = true;
+              name = "steam-float";
+              match = {
+                class = "^(steam)$";
+                title = "^()$";
+              };
             }
             {
               name = "pavucontrol-opacity";
-              "match:class" = "^(org.pulseaudio.pavucontrol)$";
               opacity = "0.90";
+              match = {
+                class = "^(org.pulseaudio.pavucontrol)$";
+              };
             }
             {
               name = "firefox-workspace-3";
-              "match:class" = "^(firefox)$";
               workspace = "3";
+              match = {
+                class = "^(firefox)$";
+              };
             }
             {
               name = "firefox-opacity";
-              "match:class" = "^(firefox)$";
               opacity = "0.90";
+              match = {
+                class = "^(firefox)$";
+              };
             }
             {
               name = "firefox-twitch-opacity";
-              "match:class" = "^(firefox)$";
-              "match:title" = "^(.*)( - Twitch)(.*)$";
               opacity = "1";
+              match = {
+                class = "^(firefox)$";
+                title = "^(.*)( - Twitch)(.*)$";
+              };
             }
             {
               name = "pip-no-initial-focus";
-              "match:title" = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
               no_initial_focus = true;
+              match = {
+                title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
+              };
             }
             {
               name = "pip-workspace-3";
-              "match:title" = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
               workspace = "3 silent";
+              match = {
+                title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
+              };
             }
             {
-              name = "pip-float";
-              "match:title" = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
               float = true;
+              name = "pip-float";
+              match = {
+                title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
+              };
             }
             {
               name = "pip-pin";
-              "match:title" = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
               pin = true;
+              match = {
+                title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
+              };
             }
             {
-              name = "pip-keep-aspect";
-              "match:title" = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
               keep_aspect_ratio = true;
+              name = "pip-keep-aspect";
+              match = {
+                title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
+              };
             }
             {
               name = "pip-size";
-              "match:title" = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
               size = "345 194";
+              match = {
+                title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
+              };
             }
             {
-              name = "pip-move";
-              "match:title" = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
               move = "929 43";
+              name = "pip-move";
+              match = {
+                title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$";
+              };
             }
             {
+              center = true;
+              float = true;
               name = "open-file-center";
-              "match:title" = "^(Open File)(.*)$";
-              center = true;
-              float = true;
+              match = {
+                title = "^(Open File)(.*)$";
+              };
             }
             {
+              center = true;
+              float = true;
               name = "select-file-center";
-              "match:title" = "^(Select a File)(.*)$";
-              center = true;
-              float = true;
+              match = {
+                title = "^(Select a File)(.*)$";
+              };
             }
             {
+              center = true;
+              float = true;
               name = "choose-wallpaper-center";
-              "match:title" = "^(Choose wallpaper)(.*)$";
-              center = true;
-              float = true;
+              match = {
+                title = "^(Choose wallpaper)(.*)$";
+              };
             }
             {
+              center = true;
+              float = true;
               name = "open-folder-center";
-              "match:title" = "^(Open Folder)(.*)$";
-              center = true;
-              float = true;
+              match = {
+                title = "^(Open Folder)(.*)$";
+              };
             }
             {
+              center = true;
+              float = true;
               name = "save-as-center";
-              "match:title" = "^(Save As)(.*)$";
-              center = true;
-              float = true;
+              match = {
+                title = "^(Save As)(.*)$";
+              };
             }
             {
+              center = true;
               name = "save-image-center";
-              "match:title" = "^(Save Image)$";
-              center = true;
+              match = {
+                title = "^(Save Image)$";
+              };
             }
             {
+              center = true;
+              float = true;
               name = "library-center";
-              "match:title" = "^(Library)(.*)$";
-              center = true;
-              float = true;
+              match = {
+                title = "^(Library)(.*)$";
+              };
             }
             {
+              center = true;
+              float = true;
               name = "file-upload-center";
-              "match:title" = "^(File Upload)(.*)$";
-              center = true;
-              float = true;
+              match = {
+                title = "^(File Upload)(.*)$";
+              };
             }
             {
-              name = "gtk-file-picker";
-              "match:class" = "^(xdg-desktop-portal-gtk)$";
               center = true;
               float = true;
+              name = "gtk-file-picker";
               opacity = "0.9";
+              match = {
+                class = "^(xdg-desktop-portal-gtk)$";
+              };
             }
             {
               name = "zen-workspace-3";
-              "match:class" = "^(zen-beta)$";
               workspace = "3";
+              match = {
+                class = "^(zen-beta)$";
+              };
             }
             {
               name = "zen-twitch-opacity";
-              "match:class" = "^(zen-beta)$";
-              "match:title" = "^(.*)( - Twitch)(.*)$";
               opacity = "1";
+              match = {
+                class = "^(zen-beta)$";
+                title = "^(.*)( - Twitch)(.*)$";
+              };
             }
             {
               name = "spotify-workspace-4";
-              "match:class" = "^(Spotify)$";
               workspace = "4";
+              match = {
+                class = "^(Spotify)$";
+              };
             }
             {
               name = "spotify-opacity";
-              "match:class" = "^(Spotify)$";
               opacity = "0.90";
+              match = {
+                class = "^(Spotify)$";
+              };
             }
             {
               name = "nautilus-opacity";
-              "match:class" = "^(org.gnome.Nautilus)$";
               opacity = "0.9";
+              match = {
+                class = "^(org.gnome.Nautilus)$";
+              };
             }
             {
-              name = "nautilus-previewer-float";
-              "match:class" = "^(org.gnome.NautilusPreviewer)$";
               float = true;
+              name = "nautilus-previewer-float";
+              match = {
+                class = "^(org.gnome.NautilusPreviewer)$";
+              };
             }
             {
               name = "baobab-opacity";
-              "match:class" = "^(org.gnome.baobab)$";
               opacity = "0.9";
+              match = {
+                class = "^(org.gnome.baobab)$";
+              };
             }
             {
               name = "yad-opacity";
-              "match:class" = "^(yad)$";
               opacity = "0.89";
+              match = {
+                class = "^(yad)$";
+              };
             }
             {
               name = "kyoko-opacity";
-              "match:class" = "^(kyoko)$";
               opacity = "0.85";
+              match = {
+                class = "^(kyoko)$";
+              };
             }
             {
               name = "settings-opacity";
-              "match:class" = "^(org.gnome.Settings)$";
               opacity = "0.9";
+              match = {
+                class = "^(org.gnome.Settings)$";
+              };
             }
             {
               name = "kitty-size";
-              "match:class" = "^(kitty)";
               size = "300 500";
+              match = {
+                class = "^(kitty)";
+              };
             }
             {
               name = "obsidian-workspace-4";
-              "match:class" = "^(obsidian)$";
               workspace = "4";
+              match = {
+                class = "^(obsidian)$";
+              };
             }
             {
               name = "obsidian-opacity";
-              "match:class" = "^(obsidian)$";
               opacity = "0.70";
+              match = {
+                class = "^(obsidian)$";
+              };
             }
             {
               name = "minecraft-tile";
-              "match:title" = "^(Sign in to Minecraft)(.*)$";
               tile = true;
+              match = {
+                title = "^(Sign in to Minecraft)(.*)$";
+              };
             }
             {
               name = "lm-studio-opacity";
-              "match:class" = "^(LM Studio)$";
               opacity = "0.88";
+              match = {
+                class = "^(LM Studio)$";
+              };
             }
             {
               name = "lunacy-opacity";
-              "match:class" = "^(Lunacy)$";
               opacity = "0.88";
+              match = {
+                class = "^(Lunacy)$";
+              };
             }
             {
-              name = "steam-app-immediate";
-              "match:class" = "(steam_app)";
               immediate = true;
+              name = "steam-app-immediate";
+              match = {
+                class = "(steam_app)";
+              };
             }
             {
               name = "tiled-no-shadow";
-              "match:float" = false;
               no_shadow = true;
+              match = {
+                float = false;
+              };
             }
           ];
-
-          layerrule = [
+          layer_rule = [
             {
               name = "no-anim-walker";
-              "match:namespace" = "walker";
               no_anim = true;
+              match = {
+                namespace = "walker";
+              };
             }
             {
               name = "no-anim-selection";
-              "match:namespace" = "selection";
               no_anim = true;
+              match = {
+                namespace = "selection";
+              };
             }
             {
               name = "no-anim-overview";
-              "match:namespace" = "overview";
               no_anim = true;
+              match = {
+                namespace = "overview";
+              };
             }
             {
               name = "no-anim-anyrun";
-              "match:namespace" = "anyrun";
               no_anim = true;
+              match = {
+                namespace = "anyrun";
+              };
             }
             {
               name = "no-anim-indicator";
-              "match:namespace" = "indicator.*";
               no_anim = true;
+              match = {
+                namespace = "indicator.*";
+              };
             }
             {
               name = "no-anim-osk";
-              "match:namespace" = "osk";
               no_anim = true;
+              match = {
+                namespace = "osk";
+              };
             }
             {
               name = "no-anim-hyprpicker";
-              "match:namespace" = "hyprpicker";
               no_anim = true;
+              match = {
+                namespace = "hyprpicker";
+              };
             }
             {
-              name = "blur-quickshell";
-              "match:namespace" = "quickshell";
               blur = true;
+              name = "blur-quickshell";
+              match = {
+                namespace = "quickshell";
+              };
             }
             {
-              name = "ignore-alpha-quickshell";
-              "match:namespace" = "quickshell";
               ignore_alpha = 0;
+              name = "ignore-alpha-quickshell";
+              match = {
+                namespace = "quickshell";
+              };
             }
             {
               name = "xray-quickshell";
-              "match:namespace" = "quickshell";
               xray = true;
+              match = {
+                namespace = "quickshell";
+              };
             }
             {
+              blur = true;
               name = "blur-quickshell-osd";
-              "match:namespace" = "quickshell-osd";
-              blur = true;
+              match = {
+                namespace = "quickshell-osd";
+              };
             }
             {
+              ignore_alpha = 0.2;
               name = "ignore-alpha-quickshell-osd";
-              "match:namespace" = "quickshell-osd";
-              ignore_alpha = 0.2;
+              match = {
+                namespace = "quickshell-osd";
+              };
             }
             {
+              blur = true;
               name = "blur-quickshell-overlays";
-              "match:namespace" = "quickshell-(panel|launcher)";
-              blur = true;
+              match = {
+                namespace = "quickshell-(panel|launcher)";
+              };
             }
             {
-              name = "ignore-alpha-quickshell-overlays";
-              "match:namespace" = "quickshell-(panel|launcher)";
               ignore_alpha = 0.2;
+              name = "ignore-alpha-quickshell-overlays";
+              match = {
+                namespace = "quickshell-(panel|launcher)";
+              };
             }
             {
-              name = "blur-vicinae";
-              "match:namespace" = "vicinae";
               blur = true;
+              name = "blur-vicinae";
+              match = {
+                namespace = "vicinae";
+              };
             }
             {
-              name = "ignore-alpha-vicinae";
-              "match:namespace" = "vicinae";
               ignore_alpha = 0;
+              name = "ignore-alpha-vicinae";
+              match = {
+                namespace = "vicinae";
+              };
             }
           ];
         };
@@ -666,38 +1065,45 @@
 
     provides.l16 = {
       homeManager.wayland.windowManager.hyprland.settings = {
-        monitor = ",preferred,auto,1.25";
-        input = {
-          kb_layout = "fr";
-          numlock_by_default = true;
-          resolve_binds_by_sym = 0;
-          touchpad = {
-            natural_scroll = true;
-            disable_while_typing = false;
-            scroll_factor = 0.3;
+        monitor = {
+          output = "";
+          mode = "preferred";
+          position = "auto";
+          scale = 1.25;
+        };
+        config = {
+          input = {
+            kb_layout = "fr";
+            numlock_by_default = true;
+            resolve_binds_by_sym = false;
+            touchpad = {
+              natural_scroll = true;
+              disable_while_typing = false;
+              scroll_factor = 0.3;
+            };
           };
         };
         bind = [
-          "Super, ampersand, workspace, 1"
-          "Super, eacute, workspace, 2"
-          "Super, quotedbl, workspace, 3"
-          "Super, apostrophe, workspace, 4"
-          "Super, parenleft, workspace, 5"
-          "Super, egrave, workspace, 6"
-          "Super, minus, workspace, 7"
-          "Super, underscore, workspace, 8"
-          "Super, ccedilla, workspace, 9"
-          "Super, agrave, workspace, 10"
-          "Super+Shift, ampersand, movetoworkspace, 1"
-          "Super+Shift, eacute, movetoworkspace, 2"
-          "Super+Shift, quotedbl, movetoworkspace, 3"
-          "Super+Shift, apostrophe, movetoworkspace, 4"
-          "Super+Shift, parenleft, movetoworkspace, 5"
-          "Super+Shift, egrave, movetoworkspace, 6"
-          "Super+Shift, minus, movetoworkspace, 7"
-          "Super+Shift, underscore, movetoworkspace, 8"
-          "Super+Shift, ccedilla, movetoworkspace, 9"
-          "Super+Shift, agrave, movetoworkspace, 10"
+          (bind "Super + ampersand" "hl.dsp.focus({ workspace = 1 })")
+          (bind "Super + eacute" "hl.dsp.focus({ workspace = 2 })")
+          (bind "Super + quotedbl" "hl.dsp.focus({ workspace = 3 })")
+          (bind "Super + apostrophe" "hl.dsp.focus({ workspace = 4 })")
+          (bind "Super + parenleft" "hl.dsp.focus({ workspace = 5 })")
+          (bind "Super + egrave" "hl.dsp.focus({ workspace = 6 })")
+          (bind "Super + minus" "hl.dsp.focus({ workspace = 7 })")
+          (bind "Super + underscore" "hl.dsp.focus({ workspace = 8 })")
+          (bind "Super + ccedilla" "hl.dsp.focus({ workspace = 9 })")
+          (bind "Super + agrave" "hl.dsp.focus({ workspace = 10 })")
+          (bind "Super + Shift + ampersand" "hl.dsp.window.move({ workspace = 1, follow = true })")
+          (bind "Super + Shift + eacute" "hl.dsp.window.move({ workspace = 2, follow = true })")
+          (bind "Super + Shift + quotedbl" "hl.dsp.window.move({ workspace = 3, follow = true })")
+          (bind "Super + Shift + apostrophe" "hl.dsp.window.move({ workspace = 4, follow = true })")
+          (bind "Super + Shift + parenleft" "hl.dsp.window.move({ workspace = 5, follow = true })")
+          (bind "Super + Shift + egrave" "hl.dsp.window.move({ workspace = 6, follow = true })")
+          (bind "Super + Shift + minus" "hl.dsp.window.move({ workspace = 7, follow = true })")
+          (bind "Super + Shift + underscore" "hl.dsp.window.move({ workspace = 8, follow = true })")
+          (bind "Super + Shift + ccedilla" "hl.dsp.window.move({ workspace = 9, follow = true })")
+          (bind "Super + Shift + agrave" "hl.dsp.window.move({ workspace = 10, follow = true })")
         ];
       };
     };

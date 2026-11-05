@@ -18,10 +18,13 @@
       { user, ... }:
       lib.optionalAttrs (user.userName == "oery") {
         homeManager.wayland.windowManager.hyprland.settings = {
-          monitor = [
-            ",preferred,auto,1.25"
-          ];
-          input = {
+          monitor = {
+            output = "";
+            mode = "preferred";
+            position = "auto";
+            scale = 1.25;
+          };
+          config.input = {
             accel_profile = "flat";
           };
         };
