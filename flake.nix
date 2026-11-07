@@ -34,7 +34,7 @@
     import-tree.url = "github:denful/import-tree";
     mcp-servers = {
       url = "git+https://github.com/Oery/my-mcp-servers.git";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-db = {
       url = "github:Mic92/nix-index-database";

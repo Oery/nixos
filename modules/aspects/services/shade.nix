@@ -1,14 +1,5 @@
 { inputs, lib, ... }:
 {
-  perSystem =
-    { pkgs, ... }:
-    {
-      packages.mcp-servers =
-        (pkgs.extend inputs.shade.inputs.rust-overlay.overlays.default).callPackage
-          ../../../user-packages/my-mcp-servers/package.nix
-          { src = inputs.mcp-servers; };
-    };
-
   den.aspects.shade = {
     nixos.users.users.oery.linger = true;
 
@@ -18,11 +9,17 @@
         homeManager =
           { pkgs, ... }:
           let
-            mcpServers = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.mcp-servers;
+            mcpServers = inputs.mcp-servers.packages.${pkgs.stdenv.hostPlatform.system};
+            mcpYoutube = mcpServers.mcp-youtube.override { withWhisperModel = true; };
           in
           {
             imports = [ inputs.shade.homeModules.default ];
-            home.packages = [ mcpServers ];
+            home.packages = [
+              mcpServers.mcp-42
+              mcpServers.mcp-nightbot
+              mcpServers.mcp-obsidian
+              mcpYoutube
+            ];
 
             services.shade = {
               enable = true;
@@ -44,19 +41,33 @@
                   "now"
                   "notify"
                   "schedules"
+                  "fortytwo"
                   "nightbot"
                   "obsidian"
+                  "youtube"
+                  "shell"
+                  "shell_network"
                 ];
 
                 discord = {
                   token_env = "DISCORD_BOT_TOKEN";
                   owners = [ 301495911299940354 ];
                   channels.chateau_general = 997262231156826114;
+                  guests.caps = ["now"];
                 };
 
                 mcp = {
+                  fortytwo = {
+                    command = [ "${mcpServers.mcp-42}/bin/mcp-42" ];
+                    env = [
+                      "FT_CLIENT_ID"
+                      "FT_CLIENT_SECRET"
+                    ];
+                    description = "Read the owner's 42 intranet profile, projects, evaluations, events, and campus locations.";
+                  };
+
                   nightbot = {
-                    command = [ "${mcpServers}/bin/mcp-nightbot" ];
+                    command = [ "${mcpServers.mcp-nightbot}/bin/mcp-nightbot" ];
                     env = [
                       "NIGHTBOT_CLIENT_ID"
                       "NIGHTBOT_CLIENT_SECRET"
@@ -65,15 +76,29 @@
                   };
 
                   obsidian = {
-                    command = [ "${mcpServers}/bin/mcp-obsidian" ];
+                    command = [ "${mcpServers.mcp-obsidian}/bin/mcp-obsidian" ];
                     vars.OBSIDIAN_VAULT = "/home/oery/Documents/Obsidian/Shade";
                     description = "Read and edit the owner's notes. Feel free to use it to store memories, projects, owner thoughts";
+                  };
+
+                  youtube = {
+                    command = [ "${mcpYoutube}/bin/mcp-youtube" ];
+                    # Allow the server's one-hour Whisper deadline plus transport overhead.
+                    call_timeout_seconds = 3660;
+                    description = "Read public YouTube video transcripts, using local Whisper when captions are unavailable.";
                   };
                 };
 
                 memory = {
                   server = "obsidian";
                   vault = "/home/oery/Documents/Obsidian/Memories";
+                };
+
+                sandbox = {
+                  workspace = "/home/oery/Documents/shade-workspace";
+                  vault = "/home/oery/Documents/Obsidian/Memories";
+                  env = [];
+                  max_timeout_seconds = 300;
                 };
               };
             };

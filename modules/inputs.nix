@@ -58,7 +58,7 @@
 
     mcp-servers = {
       url = "git+https://github.com/Oery/my-mcp-servers.git";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixarr = {
