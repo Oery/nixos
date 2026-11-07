@@ -4,6 +4,8 @@ use utf8;
 use strict;
 use warnings;
 use parent 'Hydra::Plugin';
+use Fcntl qw(O_CREAT O_RDWR LOCK_EX SEEK_SET);
+use File::Path qw(make_path);
 use Hydra::Helper::CatalystUtils qw(showJobName showStatus);
 use JSON::MaybeXS qw(encode_json);
 use HTTP::Request;
@@ -16,13 +18,46 @@ sub isEnabled {
 
 sub buildStarted {
     my ($self, $build) = @_;
-    $self->send_notification($build, 'Started', 0);
+    return if $build->finished;
+    $self->notify_once($build, 'Started', 0);
 }
 
 sub buildFinished {
     my ($self, $build, $dependents) = @_;
     my $status = $build->buildstatus == 3 ? 'Aborted' : showStatus($build);
-    $self->send_notification($build, $status, 1);
+    $self->notify_once($build, $status, 1);
+}
+
+sub notify_once {
+    my ($self, $build, $status, $finished) = @_;
+    # The queue runner emits build_started for every dependency step. Keep the
+    # last delivered event on disk so hydra-notify restarts cannot repeat it.
+    # A finished event replaces 'started', allowing a restarted build to notify
+    # again even when Hydra reuses its build ID.
+    my $dir = $ENV{HYDRA_DATA} . '/discord-notifications';
+    make_path($dir, { mode => 0700 });
+    my $file = "$dir/" . $build->id;
+    sysopen my $state, $file, O_RDWR | O_CREAT, 0600
+        or die "Cannot open Hydra Discord notification state: $!\n";
+    flock $state, LOCK_EX
+        or die "Cannot lock Hydra Discord notification state: $!\n";
+    my $previous = <$state> // '';
+    chomp $previous;
+    my $event = $finished
+        ? join(':', 'finished', $build->starttime // 0,
+            $build->stoptime // 0, $build->buildstatus)
+        : 'started';
+    return if $previous eq $event;
+    return unless $self->send_notification($build, $status, $finished);
+
+    seek $state, 0, SEEK_SET
+        or die "Cannot seek Hydra Discord notification state: $!\n";
+    print {$state} "$event\n"
+        or die "Cannot write Hydra Discord notification state: $!\n";
+    truncate $state, tell($state)
+        or die "Cannot truncate Hydra Discord notification state: $!\n";
+    close $state
+        or die "Cannot close Hydra Discord notification state: $!\n";
 }
 
 sub send_notification {
@@ -94,6 +129,7 @@ sub send_notification {
     warn "Hydra Discord notification failed: " . $response->status_line . ": "
         . substr($response->decoded_content, 0, 500) . "\n"
         unless $response->is_success;
+    return $response->is_success;
 }
 
 1;

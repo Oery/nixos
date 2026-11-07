@@ -18,9 +18,15 @@
       # buildMachinesFiles = [ "/etc/nix/machines" ];
     };
 
-    systemd.services.hydra-notify.environment = {
-      PERL5LIB = toString ./hydra-plugins;
-      HYDRA_DISCORD_WEBHOOK_FILE = "/var/lib/hydra/discord-webhook";
+    systemd.services.hydra-notify = {
+      environment = {
+        PERL5LIB = toString ./hydra-plugins;
+        HYDRA_DISCORD_WEBHOOK_FILE = "/var/lib/hydra/discord-webhook";
+      };
+      serviceConfig = {
+        StateDirectory = "hydra/discord-notifications";
+        StateDirectoryMode = "0700";
+      };
     };
 
     services.hydra-builder = {
