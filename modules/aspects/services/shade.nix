@@ -43,17 +43,17 @@
                   "schedules"
                   "fortytwo"
                   "nightbot"
-                  "obsidian"
                   "youtube"
                   "shell"
                   "shell_network"
+                  "documents"
                 ];
 
                 discord = {
                   token_env = "DISCORD_BOT_TOKEN";
                   owners = [ 301495911299940354 ];
                   channels.chateau_general = 997262231156826114;
-                  guests.caps = ["now"];
+                  guests.caps = ["now" "documents"];
                 };
 
                 mcp = {
@@ -89,14 +89,8 @@
                   };
                 };
 
-                memory = {
-                  server = "obsidian";
-                  vault = "/home/oery/Documents/Obsidian/Memories";
-                };
-
                 sandbox = {
                   workspace = "/home/oery/Documents/shade-workspace";
-                  vault = "/home/oery/Documents/Obsidian/Memories";
                   env = [];
                   max_timeout_seconds = 300;
                 };
