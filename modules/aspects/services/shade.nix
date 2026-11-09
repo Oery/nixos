@@ -37,6 +37,8 @@
                   max_output_tokens = 384000;
                 };
 
+                api.token_env = "SHADE_API_TOKEN";
+
                 chat.caps = [
                   "now"
                   "notify"
