@@ -726,6 +726,48 @@ tooltip.background {
   border-color: @borders;
 }
 
+/* Popovers use a transparent native surface around their rounded contents.
+ * The global .background rule must not paint the shadow/input margins. */
+popover.background,
+popover.background:backdrop {
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+
+popover.menu > contents {
+  padding: 4px;
+  background-color: #101010;
+  border: 1px solid #343434;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+popover.menu modelbutton {
+  min-height: 26px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: @theme_fg_color;
+  background-color: transparent;
+}
+
+popover.menu modelbutton:hover,
+popover.menu modelbutton:selected {
+  background-color: #242424;
+}
+
+popover.menu modelbutton:disabled {
+  color: #707070;
+  background-color: transparent;
+}
+
+popover.menu separator {
+  min-height: 1px;
+  margin: 4px 8px;
+  background-color: #303030;
+}
+
 .view:selected,
 iconview:selected,
 columnview row:selected,
