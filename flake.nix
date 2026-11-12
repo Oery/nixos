@@ -55,7 +55,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     shade = {
-      url = "github:Oery/Shade";
+      url = "git+https://github.com/Oery/Shade.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
