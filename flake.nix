@@ -9,6 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     apple-silicon.url = "github:nix-community/nixos-apple-silicon";
+    aurora.url = "github:aurora-silicon/nixos-aurora/channel-testing";
     darwin = {
       url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -2,12 +2,15 @@
   config,
   lib,
   den,
+  inputs,
   ...
 }:
 {
   den.hosts.aarch64-linux.Elysium = {
     hostName = "Elysium";
     users.oery = { };
+    # Build on Aurora's pinned nixpkgs so its packages match their binary cache.
+    instantiate = inputs.aurora.inputs.nixpkgs.lib.nixosSystem;
   };
   den.hosts.x86_64-linux.L16 = {
     hostName = "L16";

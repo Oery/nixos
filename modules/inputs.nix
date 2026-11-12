@@ -41,6 +41,10 @@
       url = "github:nix-community/nixos-apple-silicon";
     };
 
+    aurora = {
+      url = "github:aurora-silicon/nixos-aurora/channel-testing";
+    };
+
     apple-fonts = {
       url = "github:Lyndeno/apple-fonts.nix";
       inputs.nixpkgs.follows = "nixpkgs";

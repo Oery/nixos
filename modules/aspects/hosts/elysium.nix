@@ -40,19 +40,49 @@
       {
         imports = [
           ../../../host-hardware/hardware-elysium.nix
-          inputs.apple-silicon.nixosModules.apple-silicon-support
+          inputs.aurora.inputs.apple-silicon.nixosModules.default
+          inputs.aurora.nixosModules.default
         ];
 
-        boot.loader.systemd-boot = {
-          enable = true;
-          configurationLimit = 5;
+        aurora.desktop = "minimal";
+        # x86 guest Mesa for FEX; only buildable on x86_64, and not needed here.
+        aurora.fexMesa.enable = false;
+        # Ambient-light keyboard backlight daemon; disabled (races the ALS at boot).
+        aurora.kbdLight.enable = false;
+
+        # Aurora's SEP/Touch ID stack has no enable option and fails here
+        # ("the enclave has no Touch ID keybag"), so turn its units off.
+        systemd.timers.aurora-sep.enable = false;
+        systemd.services = {
+          aurora-sep.enable = false;
+          aurora-sep-ready.enable = false;
+          aurora-touchid-setup.enable = false;
+          aurora-touchid-boot.enable = false;
         };
+        services.fprintd.enable = lib.mkForce false;
+        security.pam.services = {
+          sudo.fprintAuth = lib.mkForce false;
+          polkit-1.fprintAuth = lib.mkForce false;
+        };
+
+        # System is built from Aurora's nixpkgs (see den.nix); keep the registry in sync.
+        nix.registry.nixpkgs.flake = lib.mkForce inputs.aurora.inputs.nixpkgs;
+
+        # Aurora boots via GRUB (removable EFI install); its kernel has no EFI stub,
+        # so systemd-boot can't be used.
+        # The ESP is only ~476 MB and GRUB copies every listed generation's kernel.
+        boot.loader.grub.configurationLimit = 3;
 
         boot.loader.efi.canTouchEfiVariables = false;
         boot.kernelParams = [ "appledrm.show_notch=1" ];
 
         nixpkgs.overlays = [
-          inputs.apple-silicon.overlays.apple-silicon-overlay
+          inputs.aurora.inputs.apple-silicon.overlays.default
+          inputs.aurora.overlays.default
+          # opencode's node_modules hash is broken in Aurora's pinned nixpkgs.
+          (_final: prev: {
+            inherit (inputs.nixpkgs.legacyPackages.${prev.stdenv.hostPlatform.system}) opencode;
+          })
         ];
 
         hardware = {
