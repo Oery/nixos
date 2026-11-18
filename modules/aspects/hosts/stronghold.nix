@@ -1,4 +1,10 @@
-{ inputs, den, lib, ... }:
+# TODO: Blur size should be divided by two on smaller screens
+{
+  inputs,
+  den,
+  lib,
+  ...
+}:
 {
   den.aspects.Stronghold = {
     includes = [
@@ -12,19 +18,26 @@
       den.aspects.games.minecraft
     ];
 
-    provides.to-users = { user, ... }: lib.optionalAttrs (user.userName == "oery") {
-      homeManager.wayland.windowManager.hyprland.settings = {
-        monitor = ",preferred,auto,auto";
-        env = [
-          "NVD_BACKEND,direct"
-          "LIBVA_DRIVER_NAME,nvidia"
-          "GBM_BACKEND,nvidia-drm"
-          "__GLX_VENDOR_LIBRARY_NAME,nvidia-drm"
-          "MOZ_DISABLE_RDD_SANDBOX,1"
-          "WALLPAPER_TYPE,static"
-        ];
+    provides.to-users =
+      { user, ... }:
+      lib.optionalAttrs (user.userName == "oery") {
+        homeManager.wayland.windowManager.hyprland.settings = {
+          monitor = {
+            output = "";
+            mode = "preferred";
+            position = "auto";
+            scale = "auto";
+          };
+          env = [
+            { _args = [ "NVD_BACKEND" "direct" ]; }
+            { _args = [ "LIBVA_DRIVER_NAME" "nvidia" ]; }
+            { _args = [ "GBM_BACKEND" "nvidia-drm" ]; }
+            { _args = [ "__GLX_VENDOR_LIBRARY_NAME" "nvidia-drm" ]; }
+            { _args = [ "MOZ_DISABLE_RDD_SANDBOX" "1" ]; }
+            { _args = [ "WALLPAPER_TYPE" "static" ]; }
+          ];
+        };
       };
-    };
 
     nixos = { pkgs, config, ... }: {
       imports = [
@@ -61,7 +74,11 @@
       };
       programs.virt-manager.enable = true;
 
-      users.users.oery.extraGroups = [ "docker" "libvirtd" "vboxusers" ];
+      users.users.oery.extraGroups = [
+        "docker"
+        "libvirtd"
+        "vboxusers"
+      ];
 
       # Fonts installed only on this host (not in the common fonts aspect).
       fonts.packages = with pkgs; [
@@ -217,14 +234,16 @@
         deskflow
 
         # Python with the modules used by local scripts
-        (python3.withPackages (ps: with ps; [
-          matplotlib
-          pandas
-          pyaudio
-          toml
-          websockets
-          evdev
-        ]))
+        (python3.withPackages (
+          ps: with ps; [
+            matplotlib
+            pandas
+            pyaudio
+            toml
+            websockets
+            evdev
+          ]
+        ))
       ];
     };
   };
