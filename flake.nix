@@ -46,10 +46,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    omp = {
-      url = "github:Oery/omp-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     quickshell = {
       url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -29,7 +29,7 @@
         opencode
         codex
         claude-code
-        inputs.omp.packages.${pkgs.stdenv.hostPlatform.system}.default
+        omp
 
         rustc
         cargo

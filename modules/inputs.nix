@@ -50,11 +50,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    omp = {
-      url = "github:Oery/omp-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     shade = {
       url = "git+https://github.com/Oery/Shade.git";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -533,26 +533,6 @@
         "url": "https://devimages-cdn.apple.com/design/resources/download/NY.dmg"
       }
     },
-    "omp": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1788970272,
-        "narHash": "sha256-PCFaqxCxGF9zPT6wwoora1ihaQtcg+GUCVoQEXWp3HI=",
-        "owner": "Oery",
-        "repo": "omp-flake",
-        "rev": "a09b7a5b3c1dacb5634343fcf7e54ff548f3deb6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Oery",
-        "repo": "omp-flake",
-        "type": "github"
-      }
-    },
     "quickshell": {
       "inputs": {
         "nixpkgs": [
@@ -590,7 +570,6 @@
         "nix-index-db": "nix-index-db",
         "nixarr": "nixarr",
         "nixpkgs": "nixpkgs_3",
-        "omp": "omp",
         "quickshell": "quickshell",
         "shade": "shade",
         "zen-browser": "zen-browser"
