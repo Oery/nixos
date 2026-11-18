@@ -110,7 +110,13 @@
 
           mouse.hide_when_typing = true;
 
-          window.opacity = 0.85;
+          window = {
+            opacity = 0.85;
+            padding = {
+              x = 10;
+              y = 10;
+            };
+          };
 
           colors = {
             primary = {
