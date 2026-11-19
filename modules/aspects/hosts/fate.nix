@@ -39,12 +39,6 @@
         fsType = "ext4";
       };
 
-      services.nix-serve = {
-        enable = true;
-        bindAddress = "0.0.0.0";
-        secretKeyFile = "/var/lib/nix-serve/cache-priv-key.pem";
-      };
-
       services.samba = {
         enable = true;
         openFirewall = true;
@@ -78,7 +72,6 @@
       networking.firewall = {
         enable = true;
         allowedTCPPorts = [ 22 ];
-        interfaces.tailscale0.allowedTCPPorts = [ 5000 ];
       };
 
       boot = {
