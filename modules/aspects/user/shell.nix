@@ -113,7 +113,14 @@
           settings = {
             add_newline = false;
 
-            format = "$directory$nix_shell$line_break$username";
+            format = "\${custom.cat}$hostname$directory$nix_shell$line_break$username";
+
+            # Shown locally only; over SSH the hostname takes its place
+            custom.cat = {
+              format = "₍^. .^₎⟆ ∣ ";
+              when = ''[ -z "$SSH_CONNECTION" ] && [ -z "$SSH_CLIENT" ] && [ -z "$SSH_TTY" ]'';
+              shell = [ "sh" ];
+            };
 
             username = {
               detect_env_vars = [ ];
@@ -158,8 +165,8 @@
             };
 
             hostname = {
-              ssh_only = false;
-              format = "[•$hostname](bg:cyan bold fg:black)[](bold fg:cyan )";
+              ssh_only = true;
+              format = "[$hostname](cyan) ∣ ";
               trim_at = ".companyname.com";
               disabled = false;
             };
@@ -185,7 +192,7 @@
               truncate_to_repo = true;
               fish_style_pwd_dir_length = 0;
               use_logical_path = true;
-              format = "₍^. .^₎⟆ ∣ $path[$read_only]($read_only_style) ";
+              format = "$path[$read_only]($read_only_style) ";
               repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) ";
               disabled = false;
               read_only_style = "red";
