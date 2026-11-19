@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   den,
   inputs,
@@ -38,7 +37,4 @@
 
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
   den.schema.user.includes = [ den.batteries.mutual-provider ];
-
-  flake.hydraJobs.Elysium.toplevel =
-    config.flake.nixosConfigurations.Elysium.config.system.build.toplevel;
 }
