@@ -779,14 +779,14 @@ in
               name = "obsidian-workspace-4";
               workspace = "4";
               match = {
-                class = "^(obsidian)$";
+                class = "^(md.obsidian.Obsidian)$";
               };
             }
             {
               name = "obsidian-opacity";
-              opacity = "0.70";
+              opacity = "0.85";
               match = {
-                class = "^(obsidian)$";
+                class = "^(md.obsidian.Obsidian)$";
               };
             }
             {
