@@ -266,11 +266,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1794562696,
-        "narHash": "sha256-V2OrmWrPdoBBIw6UCtMJm5Ev+PPrdbbbdkPRoVPefbU=",
+        "lastModified": 1795035810,
+        "narHash": "sha256-Dk0aWxK5ypX2MdaV2NB1Kdm33XT9dUsv8VwKjueqa4g=",
         "owner": "schembriaiden",
         "repo": "helium-browser-nix-flake",
-        "rev": "eb16551510c02303821b83f67b5692094aabe3c4",
+        "rev": "eda99c0c406b8045a4a3e441f2e9608f1d64ab66",
         "type": "github"
       },
       "original": {
@@ -370,11 +370,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1794068407,
-        "narHash": "sha256-kT8qmgZ56e7Wxkt+cR8ue4uy3gksCbT7DrSVkRJfBXw=",
+        "lastModified": 1795011289,
+        "narHash": "sha256-onl9zLKTWnz6/AnbIuYs85CEvvOjlxy3Xnq3EkYPJyM=",
         "ref": "refs/heads/main",
-        "rev": "6ca717adb59dbde5d6d6efc9e32b22e1d67af15d",
-        "revCount": 17,
+        "rev": "bb8350decc04a45d0f51a29c45394950711fd7ac",
+        "revCount": 18,
         "type": "git",
         "url": "https://github.com/Oery/my-mcp-servers.git"
       },
@@ -709,11 +709,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1794249757,
-        "narHash": "sha256-bk92bjkqdBNcMOcHNvm1p/aZuzXcf+aORHggEfkAGck=",
+        "lastModified": 1795012276,
+        "narHash": "sha256-cERlV2r1LoVuvtG0P/dDsgzsrtdrQ31PhSqCRO853t0=",
         "ref": "refs/heads/main",
-        "rev": "3d58e031135687ad5d8ff7341c361820b5c2250c",
-        "revCount": 101,
+        "rev": "6fea354dbde18dd931c53250678a9d70ff964f59",
+        "revCount": 102,
         "type": "git",
         "url": "https://github.com/Oery/Shade.git"
       },
@@ -837,11 +837,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794982370,
-        "narHash": "sha256-ophGTkzf7oFD5Fa7Bjf2lVTf9XjKkMtv2fShaRkODPw=",
+        "lastModified": 1795043840,
+        "narHash": "sha256-xOaDTlUys2BZk0P0stG4a6DxW94iA5gJdFCTPAuKzgk=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "2cc6b81e90ea910e6ddbbc0f4c665b4545060a75",
+        "rev": "1a7722e7e35d960a17d2f5dd085631f032a77336",
         "type": "github"
       },
       "original": {
