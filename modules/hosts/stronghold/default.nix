@@ -105,8 +105,8 @@
         seahorse
         wofi
         yad
-        xfce.thunar
-        xfce.thunar-volman
+        thunar
+        thunar-volman
 
         # Screenshot / screen tools
         grim
@@ -125,7 +125,6 @@
         obs-studio
         vlc
         ffmpeg
-        ffmpegthumbnailer
         mkvtoolnix-cli
         yt-dlp
         sox
@@ -197,7 +196,6 @@
         cpufetch
         dysk
         tokei
-        rsync
         blueprint-compiler
         pipx
 
@@ -211,7 +209,6 @@
         polychromatic
 
         # Networking tools
-        bind
         iperf3
         mtr
         traceroute
