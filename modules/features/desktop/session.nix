@@ -1,6 +1,6 @@
 { den, ... }:
 {
-  den.aspects.user.services = {
+  den.aspects.desktop-session.provides.to-users = {
     homeManager = { pkgs, ... }: {
       services.hypridle = {
         enable = true;

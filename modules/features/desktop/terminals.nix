@@ -1,6 +1,6 @@
 { den, ... }:
 {
-  den.aspects.user.terminals = {
+  den.aspects.terminals.provides.to-users = {
     homeManager = { pkgs, ... }: {
       programs.ghostty = {
         enable = false;

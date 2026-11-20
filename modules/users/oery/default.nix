@@ -3,12 +3,8 @@
   den.aspects.oery = {
     includes = [
       den.aspects.user.shell
-      den.aspects.user.terminals
       den.aspects.user.cli-tools
-      den.aspects.user.theme
-      den.aspects.user.services
       den.aspects.user.packages
-      den.aspects.user.hyprland
     ];
 
     nixos = { pkgs, ... }: {

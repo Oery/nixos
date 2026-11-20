@@ -1,45 +1,16 @@
-{ inputs, den, ... }:
+# CLI and development tools, wanted on every machine. GUI apps live in
+# features/desktop/apps.nix.
+{ den, ... }:
 {
-  flake-file.inputs = {
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs = {
-        home-manager.follows = "home-manager";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-    helium-browser = {
-      url = "github:schembriaiden/helium-browser-nix-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
-
   den.aspects.user.packages = {
     homeManager = { pkgs, ... }: {
       home.packages = with pkgs; [
-        nautilus
-
-        inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-        inputs.helium-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-
-        pavucontrol
-        obsidian
-        vesktop
-
-        awww
-        quickshell
-
         jq
         socat
-        grimblast
-        hyprpicker
-
-        mpv
+        imagemagick
 
         tree-sitter
 
-        vscode
-        zed-editor
         opencode
         codex
         claude-code
@@ -60,13 +31,8 @@
         vscode-langservers-extracted
         stylua
 
-        kdePackages.qtdeclarative
-
         nil
-        imagemagick
-        playerctl
 
-        # speedtest-cli
         speed-cloudflare-cli
         ookla-speedtest
       ];
@@ -78,5 +44,4 @@
       manual.manpages.enable = false;
     };
   };
-
 }

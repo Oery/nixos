@@ -3,6 +3,10 @@
 {
   den.aspects.roles.workstation.includes = [
     den.aspects.hyprland
+    den.aspects.desktop-session
+    den.aspects.desktop-apps
+    den.aspects.theme
+    den.aspects.terminals
     den.aspects.audio
     den.aspects.fonts
     den.aspects.gnome-services

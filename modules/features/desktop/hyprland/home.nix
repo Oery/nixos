@@ -35,7 +35,8 @@ let
   };
 in
 {
-  den.aspects.user.hyprland = {
+  # Home Manager half of the hyprland aspect (system half: ./system.nix).
+  den.aspects.hyprland.provides.to-users = {
     homeManager = {
       wayland.windowManager.hyprland = {
         enable = true;
@@ -1058,51 +1059,5 @@ in
         '';
       };
     };
-
-    provides.l16 = {
-      homeManager.wayland.windowManager.hyprland.settings = {
-        monitor = {
-          output = "";
-          mode = "preferred";
-          position = "auto";
-          scale = 1.25;
-        };
-        config = {
-          input = {
-            kb_layout = "fr";
-            numlock_by_default = true;
-            resolve_binds_by_sym = false;
-            touchpad = {
-              natural_scroll = true;
-              disable_while_typing = false;
-              scroll_factor = 0.3;
-            };
-          };
-        };
-        bind = [
-          (bind "Super + ampersand" "hl.dsp.focus({ workspace = 1 })")
-          (bind "Super + eacute" "hl.dsp.focus({ workspace = 2 })")
-          (bind "Super + quotedbl" "hl.dsp.focus({ workspace = 3 })")
-          (bind "Super + apostrophe" "hl.dsp.focus({ workspace = 4 })")
-          (bind "Super + parenleft" "hl.dsp.focus({ workspace = 5 })")
-          (bind "Super + egrave" "hl.dsp.focus({ workspace = 6 })")
-          (bind "Super + minus" "hl.dsp.focus({ workspace = 7 })")
-          (bind "Super + underscore" "hl.dsp.focus({ workspace = 8 })")
-          (bind "Super + ccedilla" "hl.dsp.focus({ workspace = 9 })")
-          (bind "Super + agrave" "hl.dsp.focus({ workspace = 10 })")
-          (bind "Super + Shift + ampersand" "hl.dsp.window.move({ workspace = 1, follow = true })")
-          (bind "Super + Shift + eacute" "hl.dsp.window.move({ workspace = 2, follow = true })")
-          (bind "Super + Shift + quotedbl" "hl.dsp.window.move({ workspace = 3, follow = true })")
-          (bind "Super + Shift + apostrophe" "hl.dsp.window.move({ workspace = 4, follow = true })")
-          (bind "Super + Shift + parenleft" "hl.dsp.window.move({ workspace = 5, follow = true })")
-          (bind "Super + Shift + egrave" "hl.dsp.window.move({ workspace = 6, follow = true })")
-          (bind "Super + Shift + minus" "hl.dsp.window.move({ workspace = 7, follow = true })")
-          (bind "Super + Shift + underscore" "hl.dsp.window.move({ workspace = 8, follow = true })")
-          (bind "Super + Shift + ccedilla" "hl.dsp.window.move({ workspace = 9, follow = true })")
-          (bind "Super + Shift + agrave" "hl.dsp.window.move({ workspace = 10, follow = true })")
-        ];
-      };
-    };
-
   };
 }

@@ -3,7 +3,7 @@
   ...
 }:
 {
-  den.aspects.user.theme = {
+  den.aspects.theme.provides.to-users = {
     homeManager =
       { pkgs, config, ... }:
       let
