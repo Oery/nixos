@@ -7,11 +7,8 @@
 {
   den.aspects.L16 = {
     includes = [
-      den.aspects.core
-      den.aspects.desktop
-      den.aspects.nix
-      den.aspects.network
-      den.aspects.games.minecraft
+      den.aspects.roles.base
+      den.aspects.roles.workstation
     ];
 
     provides.to-users =

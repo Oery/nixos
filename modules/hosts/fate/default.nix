@@ -2,18 +2,9 @@
 {
   den.aspects.Fate = {
     includes = [
-      den.aspects.core
-      den.aspects.desktop
-      den.aspects.nix
-      den.aspects.network
-      den.aspects.games.minecraft
-      den.aspects.media-server
-      den.aspects.arr-stack
-      den.aspects.dawarich
-      den.aspects.home-automation
-      den.aspects.discord-bot
-      den.aspects.seafile
-      den.aspects.shade
+      den.aspects.roles.base
+      den.aspects.roles.workstation
+      den.aspects.roles.homelab
     ];
 
     provides.to-users =

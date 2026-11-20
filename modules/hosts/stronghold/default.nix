@@ -8,14 +8,11 @@
 {
   den.aspects.Stronghold = {
     includes = [
-      den.aspects.core
-      den.aspects.desktop
-      den.aspects.nix
-      den.aspects.network
+      den.aspects.roles.base
+      den.aspects.roles.workstation
       den.aspects.games.hytale
       den.aspects.games.emulation
       den.aspects.games.hollow-knight
-      den.aspects.games.minecraft
     ];
 
     provides.to-users =
