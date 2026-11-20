@@ -49,6 +49,14 @@ _: {
 
             set fish_cursor_default block
             set fish_cursor_insert underscore
+
+            # Start interactive SSH sessions on a clean screen (hides the login
+            # banner). SSH_TTY is only set when ssh allocates a terminal, so
+            # `ssh host cmd`, scp and rsync are unaffected; `status is-login`
+            # skips nested shells started inside the session.
+            if set -q SSH_TTY; and status is-login
+              clear
+            end
           '';
 
           shellAliases = {
