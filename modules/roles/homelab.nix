@@ -3,6 +3,8 @@
 {
   den.aspects.roles.homelab.includes = [
     den.aspects.homelab-network
+    den.aspects.homelab-secrets
+    den.aspects.homelab-backup
     den.aspects.media-server
     den.aspects.arr-stack
     den.aspects.dawarich

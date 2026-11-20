@@ -17,6 +17,7 @@ modules/
     desktop/    hyprland, theme, terminals, session, apps, audio, fonts
     apps/ gaming/ homelab/
   users/oery/ identity + what follows the user everywhere (shell, git, CLI, dev)
+secrets/      agenix-encrypted secrets (*.age) + agenix-rules.nix (who can decrypt)
 ```
 
 | Host       | Roles                         |
@@ -56,3 +57,15 @@ nix build .#checks.x86_64-linux.lint  # nixfmt --check, deadnix, statix
 nix build .#dotfiles                  # Stronghold's dotfiles as plain files
                                       # (result/home, result/store-references.txt)
 ```
+
+## Secrets and backups
+
+- Secrets are encrypted with agenix to three keys: your SSH key, Fate's SSH
+  host key, and a recovery key kept in the password manager. Any one of them
+  decrypts. Edit with `cd secrets && agenix -e <name>.age`; after changing
+  keys in `agenix-rules.nix`, run `agenix -r`. Fate decrypts them to
+  `/run/agenix/<name>` on activation.
+- Fate backs up homelab state nightly with restic to
+  `/mnt/media/backups/restic` (see `modules/features/homelab/backup.nix`).
+  The repository password is the `restic-password` secret, also stored in
+  the password manager.

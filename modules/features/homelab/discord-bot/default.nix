@@ -4,8 +4,8 @@ _: {
     let
       profile = "/nix/var/nix/profiles/discord-bot";
       buildDirectory = "/var/lib/discord-bot-build";
-      environmentFile = "/var/lib/discord-bot/environment";
-      deployKeyFile = "/var/lib/discord-bot-deploy-key";
+      environmentFile = config.age.secrets.discord-bot-env.path;
+      deployKeyFile = config.age.secrets.discord-bot-deploy-key.path;
       executable = "${profile}/bin/bot-discord-chateau";
       repository = "git@github.com:oery/bot_discord_chateau.git";
       # GitHub's published Ed25519 host key: https://api.github.com/meta

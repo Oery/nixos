@@ -6,7 +6,7 @@
   };
 
   den.aspects.arr-stack = {
-    nixos = { pkgs, ... }: {
+    nixos = { config, pkgs, ... }: {
       imports = [ inputs.nixarr.nixosModules.default ];
 
       nixarr = {
@@ -40,7 +40,7 @@
 
         vpn = {
           enable = true;
-          wgConf = "/data/.secret/vpn/wg.conf";
+          wgConf = config.age.secrets.wg-conf.path;
           # Tailnet; nixarr already includes 192.168.1.0/24 and 192.168.0.0/24.
           accessibleFrom = [ "100.64.0.0/10" ];
         };
