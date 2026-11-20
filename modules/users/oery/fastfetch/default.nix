@@ -47,9 +47,8 @@
             }
             "break"
             {
-              type = "custom";
+              type = "host";
               key = "󰌢 ";
-              format = "Apple MacBook Air";
             }
             {
               type = "cpu";

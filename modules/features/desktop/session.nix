@@ -18,16 +18,6 @@
             on-resume = "brightnessctl -r";
           }
           {
-            timeout = 150;
-            on-timeout = "brightnessctl -sd tpacpi::kbd_backlight set 0";
-            on-resume = "brightnessctl -rd tpacpi::kbd_backlight";
-          }
-          {
-            timeout = 150;
-            on-timeout = "brightnessctl -sd kbd_backlight set 0";
-            on-resume = "brightnessctl -rd kbd_backlight";
-          }
-          {
             timeout = 300;
             on-timeout = "loginctl lock-session";
           }

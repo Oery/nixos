@@ -9,11 +9,10 @@
     includes = [
       den.aspects.roles.base
       den.aspects.roles.workstation
+      den.aspects.roles.laptop
     ];
 
-    provides.to-users =
-      { user, ... }:
-      lib.optionalAttrs (user.userName == "oery") {
+    provides.to-users = {
         homeManager.wayland.windowManager.hyprland.settings = {
           monitor = {
             output = "";

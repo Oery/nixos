@@ -7,9 +7,7 @@
       den.aspects.roles.homelab
     ];
 
-    provides.to-users =
-      { user, ... }:
-      lib.optionalAttrs (user.userName == "oery") {
+    provides.to-users = {
         homeManager.wayland.windowManager.hyprland.settings.monitor = {
           output = "HDMI-A-1";
           mode = "1920x1080@240";

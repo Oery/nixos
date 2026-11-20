@@ -15,9 +15,7 @@
       den.aspects.games.hollow-knight
     ];
 
-    provides.to-users =
-      { user, ... }:
-      lib.optionalAttrs (user.userName == "oery") {
+    provides.to-users = {
         homeManager.wayland.windowManager.hyprland.settings = {
           monitor = {
             output = "";
