@@ -1,4 +1,4 @@
-{ den, lib, ... }:
+{ lib, ... }:
 {
   den.aspects.hyprland = {
     nixos = { config, ... }: {
@@ -11,19 +11,21 @@
 
       environment.variables.NIXOS_OZONE_WL = "1";
 
-      services.greetd = let
-        session = {
-          command = "${lib.getExe config.programs.uwsm.package} start hyprland-uwsm.desktop";
-          user = "oery";
+      services.greetd =
+        let
+          session = {
+            command = "${lib.getExe config.programs.uwsm.package} start hyprland-uwsm.desktop";
+            user = "oery";
+          };
+        in
+        {
+          enable = true;
+          settings = {
+            terminal.vt = 1;
+            default_session = session;
+            initial_session = session;
+          };
         };
-      in {
-        enable = true;
-        settings = {
-          terminal.vt = 1;
-          default_session = session;
-          initial_session = session;
-        };
-      };
     };
   };
 }

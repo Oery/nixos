@@ -1,7 +1,5 @@
 {
-  inputs,
   den,
-  lib,
   ...
 }:
 {
@@ -13,20 +11,20 @@
     ];
 
     provides.to-users = {
-        homeManager.wayland.windowManager.hyprland.settings = {
-          monitor = {
-            output = "";
-            mode = "preferred";
-            position = "auto";
-            scale = 1.25;
-          };
-          config.input = {
-            accel_profile = "flat";
-          };
+      homeManager.wayland.windowManager.hyprland.settings = {
+        monitor = {
+          output = "";
+          mode = "preferred";
+          position = "auto";
+          scale = 1.25;
+        };
+        config.input = {
+          accel_profile = "flat";
         };
       };
+    };
 
-    nixos = { pkgs, modulesPath, ... }: {
+    nixos = { pkgs, ... }: {
       imports = [
         ./_hardware.nix
       ];

@@ -1,11 +1,9 @@
-{ den, lib, ... }:
-{
+_: {
   den.aspects.user.shell = {
     homeManager =
       {
         config,
         lib,
-        pkgs,
         ...
       }:
       {
@@ -98,13 +96,13 @@
             };
 
             "42" = {
-               description = "Start 42 Dev shell";
-               body = ''
-                 if not string match '*42*' $PWD
-                   cd /home/oery/Documents/42
-                 end
-               '';
-             };
+              description = "Start 42 Dev shell";
+              body = ''
+                if not string match '*42*' $PWD
+                  cd /home/oery/Documents/42
+                end
+              '';
+            };
           };
         };
 

@@ -1,12 +1,6 @@
-{
-  inputs,
-  den,
-  lib,
-  ...
-}:
-{
+_: {
   den.aspects.neovim = {
-    nixos = { pkgs, ... }: {
+    nixos = _: {
       programs.neovim = {
         enable = true;
         # package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;

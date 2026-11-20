@@ -66,7 +66,10 @@
                   token_env = "DISCORD_BOT_TOKEN";
                   owners = [ 301495911299940354 ];
                   channels.chateau_general = 997262231156826114;
-                  guests.caps = ["now" "documents"];
+                  guests.caps = [
+                    "now"
+                    "documents"
+                  ];
                 };
 
                 mcp = {
@@ -104,7 +107,7 @@
 
                 sandbox = {
                   workspace = "/home/oery/Documents/shade-workspace";
-                  env = [];
+                  env = [ ];
                   max_timeout_seconds = 300;
                 };
               };

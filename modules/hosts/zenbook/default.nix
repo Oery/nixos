@@ -1,5 +1,4 @@
 {
-  inputs,
   den,
   lib,
   ...
@@ -13,23 +12,23 @@
     ];
 
     provides.to-users = {
-        homeManager.wayland.windowManager.hyprland.settings = {
-          monitor = {
-            output = "";
-            mode = "preferred";
-            position = "auto";
-            scale = 1.4;
-          };
-          config.input = {
-            kb_layout = "fr";
-            # touchpad = {
-            #   natural_scroll = false;
-            # };
-          };
+      homeManager.wayland.windowManager.hyprland.settings = {
+        monitor = {
+          output = "";
+          mode = "preferred";
+          position = "auto";
+          scale = 1.4;
+        };
+        config.input = {
+          kb_layout = "fr";
+          # touchpad = {
+          #   natural_scroll = false;
+          # };
         };
       };
+    };
 
-    nixos = { pkgs, modulesPath, ... }: {
+    nixos = { modulesPath, ... }: {
       imports = [
         ./_hardware.nix
         (modulesPath + "/installer/scan/not-detected.nix")

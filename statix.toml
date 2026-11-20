@@ -1,0 +1,5 @@
+disabled = [
+  # Flat `a.b = ...; a.c = ...;` is idiomatic NixOS/den style.
+  "repeated_keys",
+]
+ignore = [ "flake.nix" ]

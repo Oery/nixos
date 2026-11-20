@@ -1,4 +1,4 @@
-{ den, lib, ... }:
+{ lib, ... }:
 {
   den.aspects.games.steam = {
     nixos = { pkgs, ... }: {

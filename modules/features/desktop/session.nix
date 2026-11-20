@@ -1,5 +1,4 @@
-{ den, ... }:
-{
+_: {
   den.aspects.desktop-session.provides.to-users = {
     homeManager = { pkgs, ... }: {
       services.hypridle = {

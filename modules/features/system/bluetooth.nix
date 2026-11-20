@@ -1,14 +1,13 @@
-{ den, ... }:
-{
+_: {
   den.aspects.bluetooth = {
-    nixos = { pkgs, lib, ... }: {
+    nixos = { pkgs, ... }: {
       hardware.bluetooth = {
         enable = true;
         package = pkgs.bluez5-experimental;
         powerOnBoot = false;
       };
 
-      environment.systemPackages = [pkgs.bluetui];
+      environment.systemPackages = [ pkgs.bluetui ];
 
       systemd.user.services.telephony_client.enable = false;
     };

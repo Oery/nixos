@@ -1,7 +1,6 @@
-{ den, ... }:
-{
+_: {
   den.aspects.system-services = {
-    nixos = { ... }: {
+    nixos = _: {
       services = {
         dbus.implementation = "broker";
 

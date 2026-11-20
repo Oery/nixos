@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   den.aspects.discord-bot.nixos =
     { config, pkgs, ... }:
     let
@@ -30,7 +29,12 @@
 
       update = pkgs.writeShellApplication {
         name = "discord-bot-update";
-        runtimeInputs = [ config.nix.package pkgs.git pkgs.coreutils pkgs.openssh ];
+        runtimeInputs = [
+          config.nix.package
+          pkgs.git
+          pkgs.coreutils
+          pkgs.openssh
+        ];
         text = ''
           export GIT_SSH_COMMAND="ssh -F /dev/null \
             -i \"$CREDENTIALS_DIRECTORY/github-deploy-key\" \
@@ -66,7 +70,11 @@
 
       activate = pkgs.writeShellApplication {
         name = "discord-bot-activate";
-        runtimeInputs = [ config.nix.package pkgs.coreutils pkgs.systemd ];
+        runtimeInputs = [
+          config.nix.package
+          pkgs.coreutils
+          pkgs.systemd
+        ];
         text = ''
           candidate="$(readlink -e ${buildDirectory}/candidate)"
           if [[ ! "$candidate" =~ ^/nix/store/[a-z0-9]{32}-[^/]+$ ]]; then
@@ -148,7 +156,10 @@
         description = "Build and deploy new Chateau Discord bot commits";
         wants = [ "network-online.target" ];
         after = [ "network-online.target" ];
-        unitConfig.ConditionPathExists = [ environmentFile deployKeyFile ];
+        unitConfig.ConditionPathExists = [
+          environmentFile
+          deployKeyFile
+        ];
         environment = {
           HOME = buildDirectory;
           GIT_TERMINAL_PROMPT = "0";

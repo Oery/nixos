@@ -1,4 +1,4 @@
-{ den, ... }:
+_:
 let
   networkService = "podman-network-seafile-net.service";
   secrets = "/var/lib/seafile/secrets.env";
@@ -37,7 +37,10 @@ in
           seafile = {
             image = "seafileltd/seafile-mc:13.0-latest";
             autoStart = true;
-            dependsOn = [ "seafile-db" "seafile-redis" ];
+            dependsOn = [
+              "seafile-db"
+              "seafile-redis"
+            ];
             networks = [ "seafile-net" ];
             ports = [ "80:80" ];
             volumes = [ "/var/lib/seafile/data:/shared" ];

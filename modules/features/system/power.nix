@@ -1,7 +1,6 @@
-{ den, ... }:
-{
+_: {
   den.aspects.power = {
-    nixos = { ... }: {
+    nixos = _: {
       powerManagement.enable = true;
 
       services = {

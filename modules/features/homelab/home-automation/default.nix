@@ -1,5 +1,4 @@
-{ den, ... }:
-{
+_: {
   den.aspects.home-automation.nixos =
     { pkgs, ... }:
     {
@@ -44,7 +43,10 @@
 
       networking.firewall = {
         allowedTCPPorts = [ 8123 ];
-        allowedUDPPorts = [ 5353 5540 ];
+        allowedUDPPorts = [
+          5353
+          5540
+        ];
       };
     };
 }

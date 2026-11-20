@@ -1,5 +1,4 @@
-{ den, ... }:
-{
+_: {
   den.aspects.dawarich = {
     nixos = {
       services.dawarich = {

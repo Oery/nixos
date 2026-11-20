@@ -1,5 +1,4 @@
-{ den, ... }:
-{
+_: {
   den.aspects.backlight = {
     nixos = { pkgs, ... }: {
       environment.systemPackages = with pkgs; [

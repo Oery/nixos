@@ -1,4 +1,4 @@
-{ den, inputs, lib, ... }:
+{ inputs, lib, ... }:
 {
   flake-file.inputs.nixarr = {
     url = "github:nix-media-server/nixarr";
@@ -61,11 +61,22 @@
       # Renew Proton's NAT-PMP lease from inside the VPN namespace.
       systemd.services.proton-transmission-port-forward = {
         description = "Renew Proton VPN port forwarding for Transmission";
-        bindsTo = [ "wg.service" "transmission.service" ];
-        after = [ "wg.service" "transmission.service" ];
+        bindsTo = [
+          "wg.service"
+          "transmission.service"
+        ];
+        after = [
+          "wg.service"
+          "transmission.service"
+        ];
         wantedBy = [ "multi-user.target" ];
 
-        path = [ pkgs.coreutils pkgs.libnatpmp pkgs.transmission_4 pkgs.gnused ];
+        path = [
+          pkgs.coreutils
+          pkgs.libnatpmp
+          pkgs.transmission_4
+          pkgs.gnused
+        ];
 
         serviceConfig = {
           NetworkNamespacePath = "/run/netns/wg";
@@ -101,15 +112,20 @@
       };
 
       # This name sorts before nixarr's duplicate rules (tmpfiles uses first match).
-      systemd.tmpfiles.settings."00-arr-stack-torrents-perms" = lib.genAttrs
-        (map (app: "/mnt/media/torrents/${app}") [ "radarr" "sonarr" "lidarr" ])
-        (_: {
-          d = {
-          user = "transmission";
-          group = "media";
-          mode = "0775";
-          };
-        });
+      systemd.tmpfiles.settings."00-arr-stack-torrents-perms" =
+        lib.genAttrs
+          (map (app: "/mnt/media/torrents/${app}") [
+            "radarr"
+            "sonarr"
+            "lidarr"
+          ])
+          (_: {
+            d = {
+              user = "transmission";
+              group = "media";
+              mode = "0775";
+            };
+          });
 
       services = lib.genAttrs [ "radarr" "sonarr" "lidarr" "prowlarr" ] (_: {
         settings.auth.required = "DisabledForLocalAddresses";

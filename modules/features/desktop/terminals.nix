@@ -3,7 +3,16 @@
 { lib, ... }:
 let
   p = import ./theme/_palette.nix;
-  names = [ "black" "red" "green" "yellow" "blue" "magenta" "cyan" "white" ];
+  names = [
+    "black"
+    "red"
+    "green"
+    "yellow"
+    "blue"
+    "magenta"
+    "cyan"
+    "white"
+  ];
   # [ "#a" "#b" ] -> { black = "#a"; red = "#b"; ... }
   named = colours: lib.listToAttrs (lib.zipListsWith lib.nameValuePair names colours);
 in

@@ -1,7 +1,6 @@
-{ den, ... }:
-{
+_: {
   den.aspects.network = {
-    nixos = { pkgs, ... }: {
+    nixos = _: {
       networking = {
         nameservers = [
           "1.1.1.1"

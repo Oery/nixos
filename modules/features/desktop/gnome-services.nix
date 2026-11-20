@@ -1,11 +1,10 @@
-{ den, ... }:
-{
+_: {
   den.aspects.gnome-services = {
     nixos = { pkgs, ... }: {
       programs.dconf.enable = true;
 
       nixpkgs.overlays = [
-        (final: prev: {
+        (_final: prev: {
           nautilus = prev.nautilus.overrideAttrs (nprev: {
             buildInputs =
               nprev.buildInputs

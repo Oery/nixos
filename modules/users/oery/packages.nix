@@ -1,7 +1,6 @@
 # CLI and development tools, wanted on every machine. GUI apps live in
 # features/desktop/apps.nix.
-{ den, ... }:
-{
+_: {
   den.aspects.user.packages = {
     homeManager = { pkgs, ... }: {
       home.packages = with pkgs; [

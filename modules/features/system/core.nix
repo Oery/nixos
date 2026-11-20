@@ -1,5 +1,4 @@
-{ den, ... }:
-{
+_: {
   den.aspects.core = {
     nixos = { pkgs, lib, ... }: {
       time.timeZone = lib.mkDefault "Europe/Paris";

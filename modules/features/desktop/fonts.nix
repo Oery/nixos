@@ -1,4 +1,4 @@
-{ inputs, den, ... }:
+{ inputs, ... }:
 {
   flake-file.inputs.apple-fonts = {
     url = "github:Lyndeno/apple-fonts.nix";

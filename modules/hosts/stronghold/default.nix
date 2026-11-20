@@ -1,8 +1,6 @@
 # TODO: Blur size should be divided by two on smaller screens
 {
-  inputs,
   den,
-  lib,
   ...
 }:
 {
@@ -16,23 +14,53 @@
     ];
 
     provides.to-users = {
-        homeManager.wayland.windowManager.hyprland.settings = {
-          monitor = {
-            output = "";
-            mode = "preferred";
-            position = "auto";
-            scale = "auto";
-          };
-          env = [
-            { _args = [ "NVD_BACKEND" "direct" ]; }
-            { _args = [ "LIBVA_DRIVER_NAME" "nvidia" ]; }
-            { _args = [ "GBM_BACKEND" "nvidia-drm" ]; }
-            { _args = [ "__GLX_VENDOR_LIBRARY_NAME" "nvidia-drm" ]; }
-            { _args = [ "MOZ_DISABLE_RDD_SANDBOX" "1" ]; }
-            { _args = [ "WALLPAPER_TYPE" "static" ]; }
-          ];
+      homeManager.wayland.windowManager.hyprland.settings = {
+        monitor = {
+          output = "";
+          mode = "preferred";
+          position = "auto";
+          scale = "auto";
         };
+        env = [
+          {
+            _args = [
+              "NVD_BACKEND"
+              "direct"
+            ];
+          }
+          {
+            _args = [
+              "LIBVA_DRIVER_NAME"
+              "nvidia"
+            ];
+          }
+          {
+            _args = [
+              "GBM_BACKEND"
+              "nvidia-drm"
+            ];
+          }
+          {
+            _args = [
+              "__GLX_VENDOR_LIBRARY_NAME"
+              "nvidia-drm"
+            ];
+          }
+          {
+            _args = [
+              "MOZ_DISABLE_RDD_SANDBOX"
+              "1"
+            ];
+          }
+          {
+            _args = [
+              "WALLPAPER_TYPE"
+              "static"
+            ];
+          }
+        ];
       };
+    };
 
     nixos = { pkgs, config, ... }: {
       imports = [

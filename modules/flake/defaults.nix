@@ -1,4 +1,9 @@
-{ config, __findFile ? __findFile, den, ... }:
+{
+  config,
+  __findFile ? __findFile,
+  den,
+  ...
+}:
 {
   den.default = {
     nixos = {

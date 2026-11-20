@@ -4,10 +4,7 @@
     includes = [ den.aspects.user.fastfetch ];
 
     homeManager =
-      { pkgs, config, ... }:
-      let
-        cfg = config.programs.git;
-      in
+      { pkgs, ... }:
       {
         home.packages = with pkgs; [
           wakatime-cli

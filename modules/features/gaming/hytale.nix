@@ -1,4 +1,4 @@
-{ inputs, den, lib, ... }:
+{ inputs, lib, ... }:
 {
   flake-file.inputs.hytale-launcher = {
     url = "github:JPyke3/hytale-launcher-nix";

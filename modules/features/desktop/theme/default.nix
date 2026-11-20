@@ -1,11 +1,7 @@
-{
-  inputs,
-  ...
-}:
-{
+_: {
   den.aspects.theme.provides.to-users = {
     homeManager =
-      { pkgs, config, ... }:
+      { pkgs, ... }:
       let
         renoirTheme = pkgs.callPackage ./_pkgs/renoir-gtk-theme.nix { };
       in

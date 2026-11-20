@@ -15,23 +15,28 @@
     ];
 
     provides.to-users = {
-        homeManager.wayland.windowManager.hyprland = {
-          systemd.enable = false;
-          settings = {
-            env = [
-              { _args = [ "WALLPAPER_TYPE" "static" ]; }
-            ];
-            config.input = {
-              kb_options = "caps:swapescape";
-              touchpad = {
-                disable_while_typing = true;
-                scroll_factor = 0.2;
-                natural_scroll = true;
-              };
+      homeManager.wayland.windowManager.hyprland = {
+        systemd.enable = false;
+        settings = {
+          env = [
+            {
+              _args = [
+                "WALLPAPER_TYPE"
+                "static"
+              ];
+            }
+          ];
+          config.input = {
+            kb_options = "caps:swapescape";
+            touchpad = {
+              disable_while_typing = true;
+              scroll_factor = 0.2;
+              natural_scroll = true;
             };
           };
         };
       };
+    };
 
     nixos =
       { ... }:

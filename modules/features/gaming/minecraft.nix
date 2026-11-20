@@ -1,5 +1,4 @@
-{ den, ... }:
-{
+_: {
   den.aspects.games.minecraft = {
     nixos = { pkgs, ... }: {
       environment.systemPackages = [

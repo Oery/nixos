@@ -1,5 +1,4 @@
-{ den, ... }:
-{
+_: {
   den.aspects.games.hollow-knight = {
     nixos = { pkgs, ... }: {
       environment.systemPackages = [
