@@ -1,3 +1,5 @@
+# The oery account: identity plus what should follow it to every machine.
+# Desktop-only config comes from the features included by the workstation role.
 { den, ... }:
 {
   den.aspects.oery = {
@@ -7,26 +9,16 @@
       den.aspects.user.packages
     ];
 
-    nixos = { pkgs, ... }: {
-      users.users.oery = {
-        packages = [ pkgs.vim ];
-        extraGroups = [
-          "video"
-          "networkmanager"
-          "render"
-        ];
-      };
-    };
+    nixos.users.users.oery.extraGroups = [
+      "video"
+      "networkmanager"
+      "render"
+    ];
 
-    homeManager = { pkgs, ... }: {
-      home.packages = [
-        pkgs.vim
-      ];
-
-      programs.mpv = {
-        enable = true;
-        config.hwdec = "auto";
+    homeManager =
+      { pkgs, ... }:
+      {
+        home.packages = [ pkgs.vim ];
       };
-    };
   };
 }

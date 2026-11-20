@@ -1,7 +1,15 @@
-{ den, ... }:
+# Terminal emulators. Alacritty is the one in use; ghostty and kitty are kept
+# configured but disabled. Colours come from theme/_palette.nix.
+{ lib, ... }:
+let
+  p = import ./theme/_palette.nix;
+  names = [ "black" "red" "green" "yellow" "blue" "magenta" "cyan" "white" ];
+  # [ "#a" "#b" ] -> { black = "#a"; red = "#b"; ... }
+  named = colours: lib.listToAttrs (lib.zipListsWith lib.nameValuePair names colours);
+in
 {
   den.aspects.terminals.provides.to-users = {
-    homeManager = { pkgs, ... }: {
+    homeManager = {
       programs.ghostty = {
         enable = false;
 
@@ -22,33 +30,12 @@
         };
 
         themes.renoir = {
-          background = "#080808";
+          inherit (p) background foreground;
           background-opacity = 0.90;
-
-          foreground = "#F7F1FF";
-          cursor-color = "#F7F1FF";
-
-          selection-foreground = "#121517";
-          selection-background = "#F7F1FF";
-
-          palette = [
-            "0=#51576d"
-            "1=#e78284"
-            "2=#a6d189"
-            "3=#e5c890"
-            "4=#7E7D7E"
-            "5=#F7F1FF"
-            "6=#F7F1FF"
-            "7=#F7F1FF"
-            "8=#626880"
-            "9=#e67172"
-            "10=#8ec772"
-            "11=#d9ba73"
-            "12=#7b9ef0"
-            "13=#f2a4db"
-            "14=#5abfb5"
-            "15=#b5bfe2"
-          ];
+          cursor-color = p.cursor;
+          selection-foreground = p.selection.foreground;
+          selection-background = p.selection.background;
+          palette = lib.imap0 (i: c: "${toString i}=${c}") p.ansi;
         };
       };
 
@@ -65,29 +52,11 @@
           hide_mouse_cursor = true;
           background_opacity = "0.90";
 
-          background = "#080808";
-          foreground = "#F7F1FF";
-          cursor = "#F7F1FF";
-          selection_foreground = "#121517";
-          selection_background = "#F7F1FF";
-
-          color0 = "#51576d";
-          color1 = "#e78284";
-          color2 = "#a6d189";
-          color3 = "#e5c890";
-          color4 = "#7E7D7E";
-          color5 = "#F7F1FF";
-          color6 = "#F7F1FF";
-          color7 = "#F7F1FF";
-          color8 = "#626880";
-          color9 = "#e67172";
-          color10 = "#8ec772";
-          color11 = "#d9ba73";
-          color12 = "#7b9ef0";
-          color13 = "#f2a4db";
-          color14 = "#5abfb5";
-          color15 = "#b5bfe2";
-        };
+          inherit (p) background foreground cursor;
+          selection_foreground = p.selection.foreground;
+          selection_background = p.selection.background;
+        }
+        // lib.listToAttrs (lib.imap0 (i: c: lib.nameValuePair "color${toString i}" c) p.ansi);
       };
 
       programs.alacritty = {
@@ -119,39 +88,14 @@
           };
 
           colors = {
-            primary = {
-              background = "#080808";
-              foreground = "#F7F1FF";
-            };
-
-            cursor.cursor = "#F7F1FF";
-
+            primary = { inherit (p) background foreground; };
+            cursor.cursor = p.cursor;
             selection = {
-              text = "#121517";
-              background = "#F7F1FF";
+              text = p.selection.foreground;
+              inherit (p.selection) background;
             };
-
-            normal = {
-              black = "#51576d";
-              red = "#e78284";
-              green = "#a6d189";
-              yellow = "#e5c890";
-              blue = "#7E7D7E";
-              magenta = "#F7F1FF";
-              cyan = "#F7F1FF";
-              white = "#F7F1FF";
-            };
-
-            bright = {
-              black = "#626880";
-              red = "#e67172";
-              green = "#8ec772";
-              yellow = "#d9ba73";
-              blue = "#7b9ef0";
-              magenta = "#f2a4db";
-              cyan = "#5abfb5";
-              white = "#b5bfe2";
-            };
+            normal = named p.normal;
+            bright = named p.bright;
           };
         };
       };

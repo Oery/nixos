@@ -22,6 +22,11 @@
         system = pkgs.stdenv.hostPlatform.system;
       in
       {
+        programs.mpv = {
+          enable = true;
+          config.hwdec = "auto";
+        };
+
         home.packages = with pkgs; [
           inputs.zen-browser.packages.${system}.default
           inputs.helium-browser.packages.${system}.default
@@ -30,7 +35,6 @@
           pavucontrol
           obsidian
           vesktop
-          mpv
           vscode
           zed-editor
 
