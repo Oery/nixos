@@ -1,6 +1,6 @@
 _: {
   den.aspects.home-automation.nixos =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       services.home-assistant = {
         enable = true;
@@ -22,7 +22,7 @@ _: {
             name = "Home";
             unit_system = "metric";
             temperature_unit = "C";
-            time_zone = "Europe/Paris";
+            time_zone = config.time.timeZone;
           };
           http = {
             server_host = "0.0.0.0";

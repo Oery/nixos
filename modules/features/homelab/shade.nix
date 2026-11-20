@@ -18,7 +18,7 @@
       { user, ... }:
       lib.optionalAttrs (user.userName == "oery") {
         homeManager =
-          { pkgs, ... }:
+          { osConfig, pkgs, ... }:
           let
             mcpServers = inputs.mcp-servers.packages.${pkgs.stdenv.hostPlatform.system};
             mcpYoutube = mcpServers.mcp-youtube.override { withWhisperModel = true; };
@@ -36,7 +36,7 @@
               enable = true;
               # Secret values belong in ~/.config/shade/.env (mode 0600).
               settings = {
-                timezone = "Europe/Paris";
+                timezone = osConfig.time.timeZone;
 
                 model = {
                   provider = "openai_compatible";

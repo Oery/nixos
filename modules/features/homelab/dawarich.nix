@@ -6,7 +6,7 @@ _: {
         configureNginx = false;
         localDomain = "fate";
         webPort = 3002;
-        environment.APPLICATION_HOSTS = "127.0.0.1,::1,fate,100.124.121.72";
+        environment.APPLICATION_HOSTS = "127.0.0.1,::1,fate,100.124.121.72,192.168.1.18";
       };
 
       services.nginx.virtualHosts."dawarich" = {
@@ -26,7 +26,7 @@ _: {
         };
       };
 
-      networking.firewall.trustedInterfaces = [ "tailscale0" ];
+      networking.firewall.allowedTCPPorts = [ 3000 ];
     };
   };
 }

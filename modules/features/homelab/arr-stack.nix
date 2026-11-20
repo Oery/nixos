@@ -9,22 +9,26 @@
     nixos = { pkgs, ... }: {
       imports = [ inputs.nixarr.nixosModules.default ];
 
-      # Keep the stack private to the tailnet.
-      networking.firewall.trustedInterfaces = [ "tailscale0" ];
-
       nixarr = {
         enable = true;
         mediaDir = "/mnt/media";
         mediaUsers = [ "oery" ];
 
         radarr.enable = true;
+        radarr.openFirewall = true;
         sonarr.enable = true;
+        sonarr.openFirewall = true;
         lidarr.enable = true;
+        lidarr.openFirewall = true;
         prowlarr.enable = true;
+        prowlarr.openFirewall = true;
         bazarr.enable = true;
+        bazarr.openFirewall = true;
 
         transmission = {
           enable = true;
+          openFirewall = true;
+          # Tailnet; LAN (192.168.*) is allowed by nixarr by default.
           extraAllowedIps = [ "100.*" ];
           vpn.enable = true;
           peerPort = 51413;
@@ -37,6 +41,7 @@
         vpn = {
           enable = true;
           wgConf = "/data/.secret/vpn/wg.conf";
+          # Tailnet; nixarr already includes 192.168.1.0/24 and 192.168.0.0/24.
           accessibleFrom = [ "100.64.0.0/10" ];
         };
 

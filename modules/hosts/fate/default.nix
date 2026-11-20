@@ -16,32 +16,37 @@
       };
     };
 
-    nixos = {
-      imports = [ ./_hardware.nix ];
+    nixos =
+      { pkgs, ... }:
+      {
+        imports = [ ./_hardware.nix ];
 
-      # Fate runs the homelab services, so it must never sleep. Disabling the
-      # targets blocks every suspend source (hypridle, power key, logind).
-      systemd.targets = lib.genAttrs [ "sleep" "suspend" "hibernate" "hybrid-sleep" ] (_: {
-        enable = false;
-      });
+        # Fate runs the homelab services, so it must never sleep. Disabling the
+        # targets blocks every suspend source (hypridle, power key, logind).
+        systemd.targets = lib.genAttrs [ "sleep" "suspend" "hibernate" "hybrid-sleep" ] (_: {
+          enable = false;
+        });
 
-      fileSystems."/mnt/media" = {
-        device = "/dev/disk/by-uuid/00e8627b-fe44-4c76-9e39-3a26948470f4";
-        fsType = "ext4";
-      };
+        fileSystems."/mnt/media" = {
+          device = "/dev/disk/by-uuid/00e8627b-fe44-4c76-9e39-3a26948470f4";
+          fsType = "ext4";
+        };
 
-      networking.firewall = {
-        enable = true;
-        allowedTCPPorts = [ 22 ];
-      };
-
-      boot = {
-        kernel.sysctl."net.ipv4.ip_forward" = lib.mkDefault 1;
-        loader.systemd-boot = {
+        networking.firewall = {
           enable = true;
-          configurationLimit = 5;
+          allowedTCPPorts = [ 22 ];
+        };
+
+        # AMD GPU monitoring (amd-smi).
+        environment.systemPackages = [ pkgs.rocmPackages.amdsmi ];
+
+        boot = {
+          kernel.sysctl."net.ipv4.ip_forward" = lib.mkDefault 1;
+          loader.systemd-boot = {
+            enable = true;
+            configurationLimit = 5;
+          };
         };
       };
-    };
   };
 }
