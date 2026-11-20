@@ -2,7 +2,6 @@
 {
   den.aspects.oery = {
     includes = [
-      den.aspects.bluetooth
       den.aspects.user.shell
       den.aspects.user.terminals
       den.aspects.user.cli-tools

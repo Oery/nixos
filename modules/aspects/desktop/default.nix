@@ -12,6 +12,7 @@
       den.aspects.power
       den.aspects.backlight
       den.aspects.sensors
+      den.aspects.bluetooth
     ];
   };
 }
