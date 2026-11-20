@@ -4,7 +4,8 @@
   ...
 }:
 let
-  flakeInputs = lib.filterAttrs (_: v: lib.isType "flake" v) inputs;
+  # Every input except `self`: pinning this repo would change every host on every commit.
+  flakeInputs = lib.filterAttrs (n: v: n != "self" && lib.isType "flake" v) inputs;
   nixRegistry = lib.mapAttrs (_: v: { flake = v; }) flakeInputs;
 in
 {
