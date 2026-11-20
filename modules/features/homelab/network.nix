@@ -16,9 +16,17 @@
 #   Bazarr           6767                            arr-stack.nix (openFirewall)
 #   Transmission     9091 (VPN namespace)            arr-stack.nix (openFirewall)
 #   SSH              22                              hosts/fate
-_: {
-  den.aspects.homelab-network.nixos.networking.firewall = {
-    enable = true;
-    trustedInterfaces = [ "tailscale0" ];
+{ lib, ... }:
+{
+  den.aspects.homelab-network.nixos = {
+    networking.firewall = {
+      enable = true;
+      trustedInterfaces = [ "tailscale0" ];
+    };
+
+    # features/system/network.nix disables this for faster boots, but then
+    # network-online.target is reached before DHCP finishes and services that
+    # need the network at start (the Proton VPN for Transmission) fail.
+    systemd.services.NetworkManager-wait-online.enable = lib.mkForce true;
   };
 }
