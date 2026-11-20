@@ -1,0 +1,21 @@
+{ config, __findFile ? __findFile, den, ... }:
+{
+  den.default = {
+    nixos = {
+      system.stateVersion = "24.11";
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        backupFileExtension = "hm-backup";
+      };
+    };
+    homeManager.home.stateVersion = "24.11";
+  };
+
+  den.default.includes = [
+    <den/hostname>
+    <den/define-user>
+    <den/primary-user>
+    (<den/user-shell> "fish")
+  ];
+}

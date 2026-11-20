@@ -8,12 +8,7 @@
       url = "github:Lyndeno/apple-fonts.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    apple-silicon.url = "github:nix-community/nixos-apple-silicon";
     aurora.url = "github:aurora-silicon/nixos-aurora/channel-testing";
-    darwin = {
-      url = "github:nix-darwin/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     den.url = "github:denful/den";
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
@@ -37,19 +32,11 @@
       url = "git+https://github.com/Oery/my-mcp-servers.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-index-db = {
-      url = "github:Mic92/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixarr = {
       url = "github:nix-media-server/nixarr";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    quickshell = {
-      url = "github:quickshell-mirror/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     shade = {
       url = "git+https://github.com/Oery/Shade.git";
       inputs.nixpkgs.follows = "nixpkgs";
